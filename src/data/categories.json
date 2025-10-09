@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Lugares Turisticos",
+    "icon": "",
+    "description": "",
+    "href": "/places?category="
+  },
+  {
+    "id": 2,
+    "name": "Entidades Publicas",
+    "icon": "",
+    "description": "",
+    "href": "/places?category="
+  },
+  {
+    "id": 3,
+    "name": "Restaurantes y Cafeterias",
+    "icon": "",
+    "description": "",
+    "href": "/places?category="
+  },
+  {
+    "id": 4,
+    "name": "Negocios",
+    "icon": "",
+    "description": "",
+    "href": "/places?category="
+  }
+]

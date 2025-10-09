@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "Museo Ferroviario de Tafí Viejo",
+    "description": "Conserva la historia de los talleres ferroviarios que dieron origen a la ciudad.",
+    "image": "https://www.tucumanturismo.gob.ar/public/img/museoferroviariogaleria2_v9gzstpb_11-06-2024.jpg",
+    "rating": 4.6,
+    "category": "Lugares Turisticos",
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsUrl": "https://maps.app.goo.gl/Kz9t8GkC7yS4f2rV9",
+    "socialLinks": null,
+    "googleRating": 4.6,
+    "fullDescription": "Ubicado en las instalaciones de los antiguos talleres ferroviarios, el museo exhibe objetos, herramientas y mobiliario que narran el pasado industrial de Tafí Viejo. Entre sus piezas se destacan escritorios, máquinas de escribir, la antigua boletería y la sirena que marcaba el ritmo de la ciudad."
+  },
+  {
+    "id": 2,
+    "name": "Centro de Interpretación Arqueológica Thaaui",
+    "description": "Espacio dedicado a la interpretación y exhibición de vestigios de las culturas prehispánicas del territorio.",
+    "image": "https://www.tucumanturismo.gob.ar/public/img/galeriamuseothaui4_4kirfqso_12-07-2024.jpg",
+    "rating": 4.5,
+    "category": "Lugares Turisticos",
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsUrl": "https://maps.app.goo.gl/3Nn3Cg4r3uM34c856",
+    "socialLinks": null,
+    "googleRating": 4.5,
+    "fullDescription": "Localizado dentro del complejo de la Hostería Municipal Atahualpa Yupanqui, el Centro Thaaui ofrece un recorrido por el pasado ancestral de la región, permitiendo a los visitantes comprender las formas de vida y las costumbres de las culturas que habitaron el pedemonte tucumano."
+  },
+  {
+    "id": 3,
+    "name": "Mercado Municipal de Cercanías y Museo del Limón",
+    "description": "Moderno complejo con paseo gastronómico, mercado y el Museo del Limón en su planta alta.",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNNk-RV1ciKFTb9MlYjCYyjfiiSNchYLuuEzlMnYY1Q6jyzX8kMnWTYkuRY5QM6kDtkxnpEAtclgj_TyFlxo7vAyYTQjQqfPuDf8D5p3Z8cQ9qUWmjjSm8oA-uMaRo0_wAFjEb7w=s1360-w1360-h1020-rw",
+    "rating": 4.4,
+    "category": "Lugares Turisticos",
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsUrl": "https://maps.app.goo.gl/z6eRj97E8o8v973K6",
+    "socialLinks": null,
+    "googleRating": 4.4,
+    "fullDescription": "Inaugurado en 2023, este espacio revitalizado combina un mercado de productos frescos, un patio de comidas con propuestas locales y el singular Museo del Limón, que narra la historia de la citricultura, una actividad central para la economía de la región. También cuenta con salones de arte y música."
+  },
+  {
+    "id": 5,
+    "name": "Casa de la Cultura 'Catalina Albarracín de Suárez'",
+    "description": "Principal centro cultural de la ciudad, con una variada oferta de talleres y eventos artísticos.",
+    "image": "https://scontent.ftuc1-1.fna.fbcdn.net/v/t39.30808-6/555559089_10234548852456172_9136048242910208124_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=Y_UMnRbEJggQ7kNvwGLsYsP&_nc_oc=AdmD6tJusrN21qDocjvwhukuXw07I-VrbtMZQS1hRQC1DXti7vVu16Yo7ZRaDGi-Acg&_nc_zt=23&_nc_ht=scontent.ftuc1-1.fna&_nc_gid=QmirCXLt9XLz1TsnUC92SQ&oh=00_AfY0HKcG3hTUhebB3uqqdKaUmfon61ISiHYSL1Sg-1eBpg&oe=68E09095",
+    "rating": 4.4,
+    "category": "Lugares Turisticos",
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsUrl": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": null,
+    "googleRating": 4.4,
+    "fullDescription": "Ubicada sobre la avenida Alem, esta institución es el corazón de la actividad cultural de Tafí Viejo. Como parte del programa nacional 'Casas de la Historia y la Cultura del Bicentenario', alberga talleres, exposiciones de arte, obras de teatro, conciertos y presentaciones de libros durante todo el año."
+  },
+  {
+    "id": 7,
+    "name": "Alpa Puyo",
+    "description": "Parque privado con vistas panorámicas, zoológico, restaurante y actividades al aire libre.",
+    "image": "https://www.ruta0.com/img/680/2790.jpg",
+    "rating": 4.1,
+    "category": "Lugares Turisticos",
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsUrl": "https://maps.app.goo.gl/qV2QzL44w3x6j2dDA",
+    "socialLinks": null,
+    "googleRating": 4.1,
+    "fullDescription": "Alpa Puyo es un complejo recreativo privado que ofrece un espacio para disfrutar del contacto con la naturaleza. Cuenta con vistas panorámicas de la ciudad, un pequeño zoológico, restaurante, cabañas y un museo, convirtiéndolo en una opción ideal para una escapada familiar y actividades al aire libre."
+  }
+]
