@@ -22,16 +22,16 @@ import {
 import { Link } from "react-router-dom";
 
 const categories = [
-  "Restaurantes",
-  "Monumentos",
-  "Plazas",
-  "Parques",
-  "Museos",
-  "Playas",
+  "Restaurantes y cafeterias",
+  "Otros..."
+]
+
+const subCategories = [
   "Hoteles",
-  "Cafeterías",
   "Tiendas",
-  "Servicios",
+  "Estaciones de servicios",
+  "Ferreterias",
+  
 ];
 
 const provincias = [
@@ -60,12 +60,13 @@ export default function BusinessRegister() {
     // Paso 2: Información básica
     businessName: "",
     category: "",
+    subCategory: "",
     description: "",
     // Paso 3: Información de contacto
     address: "",
-    localidad: "",
-    provincia: "",
-    phone: "",
+    locality: "",
+    province: "",
+    phoneNumber: "",
     contactEmail: "",
     website: "",
     hours: "",
@@ -88,9 +89,11 @@ export default function BusinessRegister() {
           formData.password === formData.confirmPassword
         );
       case 2:
-        return formData.businessName && formData.category && formData.description;
+        const categoryValid =
+          formData.category === "otros..." ? formData.category && formData.subCategory : formData.category
+        return formData.businessName && categoryValid && formData.description
       case 3:
-        return formData.address && formData.localidad && formData.provincia && formData.phone && formData.contactEmail;
+        return formData.address && formData.locality && formData.province && formData.phoneNumber && formData.contactEmail;
       default:
         return false;
     }
@@ -155,7 +158,7 @@ export default function BusinessRegister() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -178,7 +181,7 @@ export default function BusinessRegister() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent cursor-pointer"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -210,7 +213,15 @@ export default function BusinessRegister() {
 
             <div className="space-y-2">
               <Label htmlFor="category">Categoría *</Label>
-              <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+              <Select
+                value={formData.category}
+                onValueChange={(value) => {
+                  handleInputChange("category", value)
+                  if (value !== "otros...") {
+                    handleInputChange("subCategory", "")
+                  }
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecciona una categoría" />
                 </SelectTrigger>
@@ -223,6 +234,24 @@ export default function BusinessRegister() {
                 </SelectContent>
               </Select>
             </div>
+
+            {formData.category.toLocaleLowerCase() === "otros..." && (
+              <div className="space-y-2">
+                <Label htmlFor="subcategory">Tipo de Negocio *</Label>
+                <Select value={formData.subCategory} onValueChange={(value) => handleInputChange("subCategory", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona el tipo de negocio" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {subCategories.map((subCategory) => (
+                      <SelectItem key={subCategory} value={subCategory.toLowerCase()}>
+                        {subCategory}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="description">Descripción *</Label>
@@ -273,7 +302,7 @@ export default function BusinessRegister() {
 
               <div className="space-y-2">
                 <Label htmlFor="provincia">Provincia *</Label>
-                <Select value={formData.provincia} onValueChange={(value) => handleInputChange("provincia", value)}>
+                <Select value={formData.province} onValueChange={(value) => handleInputChange("provincia", value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona provincia" />
                   </SelectTrigger>
@@ -430,7 +459,7 @@ export default function BusinessRegister() {
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Registra tu Negocio</h1>
+          <h1 className="text-4xl font-extrabold mb-4 text-primary-dark dark:text-primary-light">Registra tu Negocio</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Únete a CaminAR y conecta con los miles de visitantes que recibe tu ciudad cada día
           </p>
@@ -445,15 +474,15 @@ export default function BusinessRegister() {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                         step === currentStep
-                          ? "bg-primary text-primary-foreground"
-                          : step < currentStep
-                          ? "bg-primary/20 text-primary"
-                          : "bg-muted text-muted-foreground"
+                        ? "bg-black text-white shadow-lg ring-4 ring-gray-400 dark:ring-gray-600"
+                        : step < currentStep
+                        ? "bg-gray-600 text-white"
+                        : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
                       }`}
                     >
                       {step}
                     </div>
-                    {step < 3 && <div className={`w-8 h-0.5 mx-2 ${step < currentStep ? "bg-primary" : "bg-muted"}`} />}
+                    {step < 3 && (<div className={`w-10 h-1 mx-2 rounded-full transition-all duration-300 ${step < currentStep ? "bg-gray-600" : "bg-gray-300 dark:bg-gray-600"}`}/>)}
                   </div>
                 ))}
               </div>
@@ -477,25 +506,25 @@ export default function BusinessRegister() {
 
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 {currentStep > 1 && (
-                  <Button type="button" variant="outline" onClick={prevStep} className="flex-1 bg-transparent">
+                  <Button type="button" variant="outline" onClick={prevStep} className="flex-1 bg-transparent cursor-pointer">
                     <ChevronLeft className="w-4 h-4 mr-2" />
                     Anterior
                   </Button>
                 )}
 
                 {currentStep < 3 ? (
-                  <Button type="button" onClick={nextStep} className="flex-1" disabled={!validateStep(currentStep)}>
+                  <Button type="button" onClick={nextStep} className="flex-1 cursor-pointer" disabled={!validateStep(currentStep)}>
                     Siguiente
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 ) : (
-                  <Button type="submit" className="flex-1" disabled={!validateStep(3)}>
+                  <Button type="submit" className="flex-1 cursor-pointer" disabled={!validateStep(3)}>
                     Registrar Negocio
                   </Button>
                 )}
 
                 <Link to="/" className={currentStep === 1 ? "flex-1" : ""}>
-                  <Button type="button" variant="outline" className="w-full bg-transparent">
+                  <Button type="button" variant="outline" className="w-full bg-transparent cursor-pointer">
                     Cancelar
                   </Button>
                 </Link>
