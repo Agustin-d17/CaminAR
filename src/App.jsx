@@ -11,11 +11,13 @@ import DashboardRedirect from './pages/Business/Dashboard/DashboardRedirect'
 import DashboardProfile from './pages/Business/Dashboard/Perfil/DashboardProfile'
 import EditProfile from './pages/Business/Dashboard/Perfil/Edit/EditProfile'
 import DashboardAnalytics from './pages/Business/Dashboard/Analytics/DashboardAnalytics'
+import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 function App() {
 
   return (
     <Router>
       <div className="app">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<Places />} />

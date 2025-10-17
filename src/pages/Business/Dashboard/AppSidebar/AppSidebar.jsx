@@ -12,51 +12,12 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { Link } from "react-router-dom"
-
-
-// Sample navigation data
-// const navigationItems = [
-//   {
-//     title: "Overview",
-//     icon: Home,
-//     url: "#",
-//     isActive: true,
-//   },
-//   {
-//     title: "Dashboard",
-//     icon: LayoutDashboard,
-//     url: "#",
-//   },
-//   {
-//     title: "Settings",
-//     icon: Settings,
-//     url: "#",
-//   },
-//   {
-//     title: "Team",
-//     icon: Users,
-//     url: "#",
-//     items: [
-//       {
-//         title: "Members",
-//         url: "#",
-//       },
-//       {
-//         title: "Permissions",
-//         url: "#",
-//       },
-//       {
-//         title: "Invitations",
-//         url: "#",
-//       },
-//     ],
-//   },
-// ]
+import { Button } from "@/components/ui/button"
+import { Link, useNavigate } from "react-router-dom"
 
 const navigationItems = [
     {
-        title: "Profile",
+        title: "Perfil",
         url: "/business/dashboard/profile",
         icon: User,
     },
@@ -64,10 +25,21 @@ const navigationItems = [
         title: "Analytics",
         url: "/business/dashboard/analytics",
         icon: ChartColumn,
+    },
+    {
+      title: "Configuración",
+      url: "/business/dashboard/settings",
+      icon: Settings,
     }
 ]
 
 export function AppSidebar({ ...props }) {
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser")
+    navigate("/")
+  }
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -110,10 +82,6 @@ export function AppSidebar({ ...props }) {
               ) : (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
-                    {/* <a href={item.url}>
-                      {item.icon && <item.icon className="h-4 w-4" />}
-                      <span>{item.title}</span>
-                    </a> */}
                     <Link to={item.url} className="p-5">
                         {item.icon && <item.icon className="h-4 w-4" />}
                         <span>{item.title}</span>
@@ -126,6 +94,10 @@ export function AppSidebar({ ...props }) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <Button variant="outline" className="inline-flex items-center space-x-2 cursor-pointer hover:text-red-600" onClick={handleLogout}>
+          <LogOut className="h-4 w-4" />
+          <span>Cerrar Sesión</span>
+        </Button>
         <div className="p-4 border-t text-sm text-muted-foreground">
             v1.0.0
         </div>

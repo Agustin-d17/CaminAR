@@ -43,11 +43,6 @@ export default function DashboardLayout({ children }) {
     setIsLoading(false)
   }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem("currentUser")
-    navigate("/")
-  }
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
