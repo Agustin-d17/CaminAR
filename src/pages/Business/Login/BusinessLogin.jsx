@@ -119,13 +119,13 @@ export default function BusinessLogin() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
                 {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
               </Button>
 
               <div className="text-center text-sm text-muted-foreground">
                 ¿No tienes una cuenta?{" "}
-                <Link to="/business/register" className="text-primary hover:underline"> 
+                <Link to="/business/register" className="text-primary hover:underline cursor-pointer"> 
                   Regístrate aquí
                 </Link>
               </div>
