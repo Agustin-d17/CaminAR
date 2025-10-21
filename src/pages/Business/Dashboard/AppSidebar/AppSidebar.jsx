@@ -99,7 +99,7 @@ export function AppSidebar({ ...props }) {
           <span>Cerrar Sesión</span>
         </Button>
         <div className="p-4 border-t text-sm text-muted-foreground">
-            v1.0.0
+            Development version 0.3.0
         </div>
       </SidebarFooter>
       <SidebarRail />
