@@ -43,7 +43,7 @@ export default function Home() {
           {/* Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl w-full">
             {categories.map((category) => (
-              <Link key={category.id} to={`/places?category=${encodeURIComponent(category.name)}`}>
+              <Link key={category.categoryId} to={`/places?category=${category.categoryId}`}>
                 <div className="bg-transparent border-2 border-white rounded-full p-6 text-center hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer">
                   <h3 className="text-xl font-semibold text-white">{category.name}</h3>
                 </div>

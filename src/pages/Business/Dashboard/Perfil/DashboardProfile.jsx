@@ -225,6 +225,12 @@ export default function DashboardProfile() {
                 </p>
               </div>
               <div>
+                <p className="text-muted-foreground">Últ. Cambios</p>
+                <p className="font-medium">
+                  {new Date(business.createdAt).toLocaleDateString("es-AR")}
+                </p>
+              </div>
+              <div>
                 <p className="text-muted-foreground">ID de Negocio</p>
                 <p className="font-mono text-xs">{business.id}</p>
               </div>

@@ -5,7 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Save } from "lucide-react"
+import provinces from "@/data/provinces.json";
+import localities from "@/data/localities.json";
 
 export default function EditProfile() {
   const navigate = useNavigate()
@@ -16,13 +19,13 @@ export default function EditProfile() {
     address: "",
     locality: "",
     province: "",
-    phone: "",
-    email: "",
+    phoneNumber: "",
+    contactEmail: "",
     website: "",
     hours: "",
     googleMapsLink: "",
-    facebook: "",
-    instagram: "",
+    facebookLink: "",
+    instagramLink: "",
   })
 
   useEffect(() => {
@@ -59,6 +62,10 @@ export default function EditProfile() {
       [e.target.name]: e.target.value,
     })
   }
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <div className="space-y-6">
@@ -118,13 +125,35 @@ export default function EditProfile() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="locality">Localidad</Label>
-                <Input id="locality" name="locality" value={formData.locality} onChange={handleChange} required />
+                <Label htmlFor="localidad">Localidad</Label>
+                <Select value={formData.locality} onValueChange={(value) => handleInputChange("locality", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona tu localidad" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {localities.map((locality) => (
+                      <SelectItem key={locality.localityId} value={locality.name.toLowerCase()}>
+                        {locality.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="province">Provincia</Label>
-                <Input id="province" name="province" value={formData.province} onChange={handleChange} required />
+                <Label htmlFor="provincia">Provincia</Label>
+                <Select value={formData.province} onValueChange={(value) => handleInputChange("province", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona tu provincia" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {provinces.map((province) => (
+                      <SelectItem key={province.provinceId} value={province.name.toLowerCase()}>
+                        {province.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">

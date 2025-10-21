@@ -33,7 +33,7 @@ export default function PlacePage() {
 
         {/* Title */}
         <div className="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold text-primary">
-          CaminArte
+          CaminAR
         </div>
       </nav>
 
@@ -64,7 +64,7 @@ export default function PlacePage() {
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Google Maps Button */}
             <Button asChild className="flex items-center gap-2">
-              <a href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+              <a href={place.googleMapsLink} target="_blank" rel="noopener noreferrer">
                 <MapPin className="h-4 w-4" />
                 Ver en Google Maps
               </a>

@@ -1,0 +1,79 @@
+[
+  {
+    "localityId": "san_miguel_de_tucuman",
+    "name": "San Miguel de Tucumán",
+    "provinceId": "tucuman",
+    "lat": -26.8241,
+    "lng": -65.2226
+  },
+  {
+    "localityId": "yerba_buena",
+    "name": "Yerba Buena",
+    "provinceId": "tucuman",
+    "lat": -26.8167,
+    "lng": -65.3167
+  },
+  {
+    "localityId": "banda_del_rio_sali",
+    "name": "Banda del Río Salí",
+    "provinceId": "tucuman",
+    "lat": -26.8403,
+    "lng": -65.1683
+  },
+  {
+    "localityId": "tafi_viejo",
+    "name": "Tafí Viejo",
+    "provinceId": "tucuman",
+    "lat": -26.7319,
+    "lng": -65.2594
+  },
+  {
+    "localityId": "las_talitas",
+    "name": "Las Talitas",
+    "provinceId": "tucuman",
+    "lat": -26.7878,
+    "lng": -65.2303
+  },
+  {
+    "localityId": "famailla",
+    "name": "Famaillá",
+    "provinceId": "tucuman",
+    "lat": -27.0545,
+    "lng": -65.4033
+  },
+  {
+    "localityId": "monteros",
+    "name": "Monteros",
+    "provinceId": "tucuman",
+    "lat": -27.1671,
+    "lng": -65.4989
+  },
+  {
+    "localityId": "tafi_del_valle",
+    "name": "Tafí del Valle",
+    "provinceId": "tucuman",
+    "lat": -26.8494,
+    "lng": -65.7097
+  },
+  {
+    "localityId": "lules",
+    "name": "Lules",
+    "provinceId": "tucuman",
+    "lat": -26.9244,
+    "lng": -65.3383
+  },
+  {
+    "localityId": "concepcion",
+    "name": "Concepción",
+    "provinceId": "tucuman",
+    "lat": -27.3472,
+    "lng": -65.595
+  },
+  {
+    "localityId": "aguilares",
+    "name": "Aguilares",
+    "provinceId": "tucuman",
+    "lat": -27.4311,
+    "lng": -65.6147
+  }
+]

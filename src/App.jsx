@@ -11,6 +11,7 @@ import DashboardRedirect from './pages/Business/Dashboard/DashboardRedirect'
 import DashboardProfile from './pages/Business/Dashboard/Perfil/DashboardProfile'
 import EditProfile from './pages/Business/Dashboard/Perfil/Edit/EditProfile'
 import DashboardAnalytics from './pages/Business/Dashboard/Analytics/DashboardAnalytics'
+import DashboardSettings from './pages/Business/Dashboard/Settings/DashboardSettings'
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="profile" element={<DashboardProfile />} />
             <Route path="profile/edit" element={<EditProfile />} />
             <Route path="analytics" element={<DashboardAnalytics />} />
+            <Route path="settings" element={<DashboardSettings />} />
           </Route>
         </Routes>
       </div>

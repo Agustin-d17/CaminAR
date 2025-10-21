@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom"
 import { useState, useMemo } from "react"
 import touristSpotsData from "@/data/touristSpots.json"
 import { ArrowLeft } from "lucide-react"
+import categories from "@/data/categories.json"
 
 const touristSpots = touristSpotsData
 
@@ -17,7 +18,7 @@ export default function PlacesPage() {
   const filteredSpots = useMemo(() => {
     if (!category) return touristSpots
     return touristSpots.filter(
-      (spot) => spot.category.toLowerCase() === category.toLowerCase()
+      (spot) => spot.categoryId === category
     )
   }, [category])
 
@@ -39,8 +40,9 @@ export default function PlacesPage() {
   }, [filteredSpots, sortOption])
 
   const getTitle = () => {
-    if (!category) return "Descubri Tafi Viejo"
-    return category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()
+    if (!category) return "Descubrí Tafi Viejo"
+    const cat = categories.find(c => c.categoryId === category)
+    return cat ? cat.name : category
   }
 
   return (
@@ -90,7 +92,7 @@ export default function PlacesPage() {
               description={spot.description}
               image={spot.image}
               rating={spot.rating}
-              category={spot.category}
+              category={categories.find(c => c.id === spot.categoryId)?.name}
             />
           ))}
         </div>

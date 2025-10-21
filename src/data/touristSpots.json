@@ -4,12 +4,24 @@
     "name": "Museo Ferroviario de Tafí Viejo",
     "description": "Conserva la historia de los talleres ferroviarios que dieron origen a la ciudad.",
     "image": "https://www.tucumanturismo.gob.ar/public/img/museoferroviariogaleria2_v9gzstpb_11-06-2024.jpg",
-    "rating": 4.6,
-    "category": "Lugares Turisticos",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
-    "googleMapsUrl": "https://maps.app.goo.gl/Kz9t8GkC7yS4f2rV9",
-    "socialLinks": null,
-    "googleRating": 4.6,
+    "googleMapsLink": "https://maps.app.goo.gl/Kz9t8GkC7yS4f2rV9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJYxfHsrtnIpQRI_RcpcR5zOc",
     "fullDescription": "Ubicado en las instalaciones de los antiguos talleres ferroviarios, el museo exhibe objetos, herramientas y mobiliario que narran el pasado industrial de Tafí Viejo. Entre sus piezas se destacan escritorios, máquinas de escribir, la antigua boletería y la sirena que marcaba el ritmo de la ciudad."
   },
   {
@@ -17,51 +29,199 @@
     "name": "Centro de Interpretación Arqueológica Thaaui",
     "description": "Espacio dedicado a la interpretación y exhibición de vestigios de las culturas prehispánicas del territorio.",
     "image": "https://www.tucumanturismo.gob.ar/public/img/galeriamuseothaui4_4kirfqso_12-07-2024.jpg",
-    "rating": 4.5,
-    "category": "Lugares Turisticos",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
-    "googleMapsUrl": "https://maps.app.goo.gl/3Nn3Cg4r3uM34c856",
-    "socialLinks": null,
-    "googleRating": 4.5,
+    "googleMapsLink": "https://maps.app.goo.gl/3Nn3Cg4r3uM34c856",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJzzRgbQBnIpQRyIiteNrEgOU",
     "fullDescription": "Localizado dentro del complejo de la Hostería Municipal Atahualpa Yupanqui, el Centro Thaaui ofrece un recorrido por el pasado ancestral de la región, permitiendo a los visitantes comprender las formas de vida y las costumbres de las culturas que habitaron el pedemonte tucumano."
   },
   {
     "id": 3,
-    "name": "Mercado Municipal de Cercanías y Museo del Limón",
+    "name": "Mercado Municipal",
     "description": "Moderno complejo con paseo gastronómico, mercado y el Museo del Limón en su planta alta.",
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNNk-RV1ciKFTb9MlYjCYyjfiiSNchYLuuEzlMnYY1Q6jyzX8kMnWTYkuRY5QM6kDtkxnpEAtclgj_TyFlxo7vAyYTQjQqfPuDf8D5p3Z8cQ9qUWmjjSm8oA-uMaRo0_wAFjEb7w=s1360-w1360-h1020-rw",
-    "rating": 4.4,
-    "category": "Lugares Turisticos",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
-    "googleMapsUrl": "https://maps.app.goo.gl/z6eRj97E8o8v973K6",
-    "socialLinks": null,
-    "googleRating": 4.4,
+    "googleMapsLink": "https://maps.app.goo.gl/z6eRj97E8o8v973K6",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJo05qUNpnIpQRYJfe63u47rA",
     "fullDescription": "Inaugurado en 2023, este espacio revitalizado combina un mercado de productos frescos, un patio de comidas con propuestas locales y el singular Museo del Limón, que narra la historia de la citricultura, una actividad central para la economía de la región. También cuenta con salones de arte y música."
   },
   {
     "id": 5,
-    "name": "Casa de la Cultura 'Catalina Albarracín de Suárez'",
+    "name": "Casa de la historia y la cultura del Bicentenario",
     "description": "Principal centro cultural de la ciudad, con una variada oferta de talleres y eventos artísticos.",
-    "image": "https://scontent.ftuc1-1.fna.fbcdn.net/v/t39.30808-6/555559089_10234548852456172_9136048242910208124_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=Y_UMnRbEJggQ7kNvwGLsYsP&_nc_oc=AdmD6tJusrN21qDocjvwhukuXw07I-VrbtMZQS1hRQC1DXti7vVu16Yo7ZRaDGi-Acg&_nc_zt=23&_nc_ht=scontent.ftuc1-1.fna&_nc_gid=QmirCXLt9XLz1TsnUC92SQ&oh=00_AfY0HKcG3hTUhebB3uqqdKaUmfon61ISiHYSL1Sg-1eBpg&oe=68E09095",
-    "rating": 4.4,
-    "category": "Lugares Turisticos",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noVVlslCdH0g8mF8GvMgAWVOpejZeSnBv3aEf3iTRSO8xq6GLj59ByNv0dszcRKCY0GAtDtdR3LpQi-pRCY8ykF9Xy1Jz7JaTfQFRH5x_oCA8I_Ng2dHoWiYi1ufX5S8MFUwxgS=s1360-w1360-h1020-rw",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
-    "googleMapsUrl": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
-    "socialLinks": null,
-    "googleRating": 4.4,
+    "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJkY_sw8lnIpQR5It37cy_rw0",
     "fullDescription": "Ubicada sobre la avenida Alem, esta institución es el corazón de la actividad cultural de Tafí Viejo. Como parte del programa nacional 'Casas de la Historia y la Cultura del Bicentenario', alberga talleres, exposiciones de arte, obras de teatro, conciertos y presentaciones de libros durante todo el año."
+  }, 
+  {
+    "id": 6,
+    "name": "Hostería Atahualpa Yupanqui",
+    "description": "Bajo la sombra de los imponentes talleres ferroviarios más grandes de América Latina, la Hostería Atahualpa Yupanqui de Tafí Viejo se sitúa en la exuberante yunga, ofreciendo una vista panorámica de los majestuosos cerros tucumanos.",
+    "image": "https://hosteriatafiviejo.com.ar/wp-content/uploads/2024/01/Hosteria-Atahualpa-Yupanqui.jpg",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJw2920SxmIpQRyMtGK3Bvzdc",
+    "fullDescription": "El extenso predio abarca 3 hectáreas, con 2500 metros cuadrados de construcción cubierta. Las habitaciones están completamente equipadas, y además, la hostería cuenta con dos salas de conferencias, un restaurante con capacidad para 120 comensales, provisto de una selecta cava de vinos. Asimismo, se encuentra un museo dedicado a la rica cultura de los pueblos originarios y una relajante pileta. La elección de llevar el nombre de uno de los destacados referentes de la música argentina, Atahualpa Yupanqui, no es fortuita. Se cuenta la historia de que durante el verano de 1917, el gran Atahualpa Yupanqui se estableció junto a su familia en Tafí Viejo, en ese entonces, una próspera ciudad ferroviaria."
   },
   {
     "id": 7,
-    "name": "Alpa Puyo",
-    "description": "Parque privado con vistas panorámicas, zoológico, restaurante y actividades al aire libre.",
-    "image": "https://www.ruta0.com/img/680/2790.jpg",
-    "rating": 4.1,
-    "category": "Lugares Turisticos",
+    "name": "Balneario La Toma",
+    "description": "Este sitio es un oasis natural que ofrece la oportunidad para escapar del calor y disfrutar de una jornada refrescante rodeado de la yunga",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq6Fh1MvsWO8wulpOwtR8ZNMeqkadViwlvoahNLPPluEmIMS6zgISu_cdlga5FT1svjH_csx5D3cX7q2zWA_iAvnTon3xQXIItUp8Q5fhklEwVAmXRA31cku94PSozaCJM2hiRMQg=s1360-w1360-h1020-rw",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
-    "googleMapsUrl": "https://maps.app.goo.gl/qV2QzL44w3x6j2dDA",
-    "socialLinks": null,
-    "googleRating": 4.1,
-    "fullDescription": "Alpa Puyo es un complejo recreativo privado que ofrece un espacio para disfrutar del contacto con la naturaleza. Cuenta con vistas panorámicas de la ciudad, un pequeño zoológico, restaurante, cabañas y un museo, convirtiéndolo en una opción ideal para una escapada familiar y actividades al aire libre."
+    "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJd9zOQoFoIpQRdetynBXTOZE",
+    "fullDescription": "Este sitio es un oasis natural que ofrece la oportunidad para escapar del calor y disfrutar de una jornada refrescante rodeado de la yunga. Está abierto todos los días y cuenta con merenderos, asadores, quincho y un área de juegos infantiles. Cuenta con un emprendimiento de criadero de truchas donde se pueden observar piletones donde se crian más de 400 ejemplares de trucha arcoíris."  
+  },
+  {
+    "id": 8,
+    "name": "Viaducto El Saladillo",
+    "description": "Es un puente ferroviario, actualmente sin uso, ubicado en El Cadillal, Tucumán, Argentina. Además, desde el 14 de julio del 2000 el viaducto es Monumento Histórico Nacional, siendo un sitio frecuentemente visitado por turistas.",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no2b7ZXJL4giRCTbOtTRTq1BxdpICxc1SIqv85uBhCpGZNggHUdBRGcqaOc9uqPUrWrWfpIXyIcAxYc2ITboIFANdcyQ5pfqJtd7ZhZ-LPXU6V4j-_bIDttDA4QEcNPVtBIoqAtRA=w243-h174-n-k-no-nu",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsLink": "https://maps.app.goo.gl/rTpCRNiqjkxSmqFR9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJcyDng8dlIpQRxHdxZw_GKiE",
+    "fullDescription": "El viaducto fue originalmente proyectado para continuar el tramo Villa Muñecas-Tapia del Ferrocarril Central Norte. Para cubrir el trayecto se necesitaba sortear un accidentado terreno de contrafuerte y hondonada que desembocaba en las barrancas del río Salí, por lo cual se decidió construir un viaducto y un túnel de trocha angosta."  
+  },
+  {
+    "id": 9,
+    "name": "Teatro Sociedad Española",
+    "description": "El teatro de la Sociedad Española contuvo a la inmigración española de Tafí Viejo. Luego se convirtió en sede de grandes carnavales y en la década del 80 albergó un cine.",
+    "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqPOB3U-EX0b-h1wutMIhlbv4vdyPB6MImE2410aglvkCQOeplmGz5fBGTKwqgDkF5OQApxbEcmsjSghrEL3qLAN4ZMsiQiHQhxIWpDpDBkAyp9asyllqkHLQsX9ohv4T4URps=s1360-w1360-h1020-rw",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "ChIJM954CLdnIpQR6_iIC_AFTIk",
+    "fullDescription": "Sobre una avenida chata y abarrotada de locales comerciales que sacan su mercadería a la vereda, la imagen del edificio del teatro de la Sociedad Española se destaca sin esfuerzo. El inmueble ocupa 60×60 metros entre la sala y otros anexos. Fue inaugurado el 24 de mayo de 1935 con la intención de que la comunidad española tuviera un espacio para las zarzuelas, los espectáculos y la difusión cultural. La construcción fue financiada con el aporte de los españoles que residían en Tafí Viejo. Ellos colaboraron con entusiasmo, según consigna un memorándum escrito por un antiguo presidente de la institución, Roberto Saa."  
+  },
+  {
+    "id": 10,
+    "name": "",
+    "description": "",
+    "image": "",
+    "categoryId": "lugares_turisticos",
+    "subCategoryId": null,
+    "rating": 4.2,
+    "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
+    "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
+    "socialLinks": {
+      "facebook": "",
+      "instagram": "",
+      "website": ""
+    },
+    "location": {
+      "address": "",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": 0,
+      "lng": 0
+    },
+    "placeId": "",
+    "fullDescription": ""  
   }
 ]

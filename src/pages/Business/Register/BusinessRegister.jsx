@@ -20,6 +20,8 @@ import {
   Instagram,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import provinces from "@/data/provinces.json";
+import localities from "@/data/localities.json";
 
 const categories = [
   "Restaurantes y cafeterias",
@@ -31,21 +33,9 @@ const subCategories = [
   "Tiendas",
   "Estaciones de servicios",
   "Ferreterias",
-  
+  "Gastronomia"
 ];
 
-const provincias = [
-  "Tucumán",
-  "Buenos Aires",
-  "Córdoba",
-  "Santa Fe",
-  "Mendoza",
-  "Salta",
-  "Entre Ríos",
-  "Misiones",
-  "Corrientes",
-  "Santiago del Estero",
-];
 
 export default function BusinessRegister() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -54,7 +44,7 @@ export default function BusinessRegister() {
 
   const [formData, setFormData] = useState({
     // Paso 1: Creación de cuenta
-    email: "",
+    loginEmail: "",
     password: "",
     confirmPassword: "",
     // Paso 2: Información básica
@@ -71,8 +61,8 @@ export default function BusinessRegister() {
     website: "",
     hours: "",
     googleMapsLink: "",
-    facebookUrl: "",
-    instagramUrl: "",
+    facebookLink: "",
+    instagramLink: "",
   });
 
   const handleInputChange = (field, value) => {
@@ -83,7 +73,7 @@ export default function BusinessRegister() {
     switch (step) {
       case 1:
         return (
-          formData.email &&
+          formData.loginEmail &&
           formData.password &&
           formData.confirmPassword &&
           formData.password === formData.confirmPassword
@@ -134,7 +124,7 @@ export default function BusinessRegister() {
                 <Input
                   id="email"
                   type="email"
-                  value={formData.email}
+                  value={formData.loginEmail}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   placeholder="tu@email.com"
                   className="pl-10"
@@ -290,26 +280,31 @@ export default function BusinessRegister() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="localidad">Localidad *</Label>
-                <Input
-                  id="localidad"
-                  value={formData.localidad}
-                  onChange={(e) => handleInputChange("localidad", e.target.value)}
-                  placeholder="Ej: Tafi Viejo"
-                  required
-                />
+                <Label htmlFor="provincia">Provincia *</Label>
+                <Select value={formData.province} onValueChange={(value) => handleInputChange("province", value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona tu provincia" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {provinces.map((province) => (
+                      <SelectItem key={province.provinceId} value={province.name.toLowerCase()}>
+                        {province.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="provincia">Provincia *</Label>
-                <Select value={formData.province} onValueChange={(value) => handleInputChange("provincia", value)}>
+                <Label htmlFor="localidad">Localidad *</Label>
+                <Select value={formData.locality} onValueChange={(value) => handleInputChange("locality", value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona provincia" />
+                    <SelectValue placeholder="Selecciona tu localidad" />
                   </SelectTrigger>
                   <SelectContent>
-                    {provincias.map((provincia) => (
-                      <SelectItem key={provincia} value={provincia.toLowerCase()}>
-                        {provincia}
+                    {localities.map((locality) => (
+                      <SelectItem key={locality.localityId} value={locality.name.toLowerCase()}>
+                        {locality.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -323,9 +318,9 @@ export default function BusinessRegister() {
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
-                    id="phone"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    id="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                     placeholder="+54 381 123-4567"
                     className="pl-10"
                     required
@@ -403,13 +398,13 @@ export default function BusinessRegister() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="facebookUrl">Facebook</Label>
+                  <Label htmlFor="facebookLink">Facebook</Label>
                   <div className="relative">
                     <Facebook className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
-                      id="facebookUrl"
-                      value={formData.facebookUrl}
-                      onChange={(e) => handleInputChange("facebookUrl", e.target.value)}
+                      id="facebookLink"
+                      value={formData.facebookLink}
+                      onChange={(e) => handleInputChange("facebookLink", e.target.value)}
                       placeholder="https://facebook.com/tunegocio"
                       className="pl-10"
                     />
@@ -417,13 +412,13 @@ export default function BusinessRegister() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="instagramUrl">Instagram</Label>
+                  <Label htmlFor="instagramLink">Instagram</Label>
                   <div className="relative">
                     <Instagram className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="instagramUrl"
-                      value={formData.instagramUrl}
-                      onChange={(e) => handleInputChange("instagramUrl", e.target.value)}
+                      value={formData.instagramLink}
+                      onChange={(e) => handleInputChange("instagramLink", e.target.value)}
                       placeholder="https://instagram.com/tunegocio"
                       className="pl-10"
                     />

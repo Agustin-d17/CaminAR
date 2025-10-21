@@ -1,23 +1,40 @@
 {
-  "id": 1,
-  "businessName": "",
-  "description": "",
-  "image": "",
-  "rating": 4.6,
-  "category": "",
-  "subCategory": "",
-  "images": "",
-  "adress": "",
-  "locality": "",
-  "province": "",
-  "phoneNumber": "",
-  "email": "",
-  "contactEmail": "",
-  "password": "",
-  "webSite": "",
-  "googleMapsLink": "",
-  "facebookLink": "",
-  "instagramLink": "",
-  "googleRating": 4.6,
-  "fullDescription": ""
+  "id": "",
+  "profile": {
+    "businessName": "",
+    "categoryId": "",
+    "subCategoryId": "",
+    "description": "",
+    "fullDescription": "",
+    "images": [],
+    "location": {
+      "address": "",
+      "localityId": "",
+      "provinceId": "",
+      "lat": 0,
+      "lng": 0
+    },
+    "rating": {
+      "value": 0,
+      "source": ""
+    },
+    "links": {
+      "googleMapsLink": "",
+      "facebookLink": "",
+      "instagramLink": "",
+      "website": ""
+    },
+    "contact": {
+      "phoneNumber": "",
+      "contactEmail": ""
+    }
+  },
+  "account": {
+    "loginEmail": "",
+    "passwordHash": "",
+    "verified": false,
+    "status": "",
+    "createdAt": "",
+    "updatedAt": ""
+  }
 }
