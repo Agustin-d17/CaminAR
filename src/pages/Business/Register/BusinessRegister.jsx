@@ -22,7 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import provinces from "@/data/provinces.json";
 import localities from "@/data/localities.json";
-import businessCategories from "@/data/Categories.json";
+import businessCategories from "@/data/categories.json";
 
 const categories = [
   "Restaurantes y cafeterias",
