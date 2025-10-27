@@ -55,7 +55,7 @@ export default function Home() {
           <div className="mt-12">
             <Link to="/places">
               <Button size="lg" className="bg-lime-600 hover:bg-lime-600/75 text-white px-8 py-3 text-lg cursor-pointer">
-                Ver Todos los Lugares
+                Ver lugares cercanos
               </Button>
             </Link>
           </div>

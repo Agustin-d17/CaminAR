@@ -22,25 +22,18 @@ import {
 import { Link } from "react-router-dom";
 import provinces from "@/data/provinces.json";
 import localities from "@/data/localities.json";
+import businessCategories from "@/data/Categories.json";
 
 const categories = [
   "Restaurantes y cafeterias",
   "Otros..."
 ]
 
-const subCategories = [
-  "Hoteles",
-  "Tiendas",
-  "Estaciones de servicios",
-  "Ferreterias",
-  "Gastronomia"
-];
-
-
 export default function BusinessRegister() {
   const [currentStep, setCurrentStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const businessSubCategories = businessCategories.find(cat => cat.categoryId === "negocios").subCategories;
 
   const [formData, setFormData] = useState({
     // Paso 1: Creación de cuenta
@@ -125,7 +118,7 @@ export default function BusinessRegister() {
                   id="email"
                   type="email"
                   value={formData.loginEmail}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  onChange={(e) => handleInputChange("loginEmail", e.target.value)}
                   placeholder="tu@email.com"
                   className="pl-10"
                   required
@@ -233,9 +226,9 @@ export default function BusinessRegister() {
                     <SelectValue placeholder="Selecciona el tipo de negocio" />
                   </SelectTrigger>
                   <SelectContent>
-                    {subCategories.map((subCategory) => (
-                      <SelectItem key={subCategory} value={subCategory.toLowerCase()}>
-                        {subCategory}
+                    {businessSubCategories.map((subCat) => (
+                      <SelectItem key={subCat.subCategoryId} value={subCat.name}>
+                        {subCat.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -313,7 +306,7 @@ export default function BusinessRegister() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
+             <div className="space-y-2">
                 <Label htmlFor="phone">Teléfono *</Label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -321,6 +314,7 @@ export default function BusinessRegister() {
                     id="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                    type="number"
                     placeholder="+54 381 123-4567"
                     className="pl-10"
                     required

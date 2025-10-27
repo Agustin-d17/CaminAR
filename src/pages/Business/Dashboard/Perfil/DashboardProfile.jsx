@@ -49,7 +49,7 @@ export default function DashboardProfile() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Perfil del Negocio</h2>
+          <h2 className="text-3xl font-bold mb-2">Perfil del Negocio</h2>
           <p className="text-muted-foreground">Información completa de tu negocio</p>
         </div>
         <Link to="/business/dashboard/profile/edit">
