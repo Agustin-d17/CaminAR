@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 export default function PlacesCard({place}) {
     return (
-        <div key={place.id} className="p-4">
+        <div key={place.id} className="mb-4">
             <div className="flex items-center justify-between p-4 rounded-lg border">
                 <div className="flex items-center gap-4 flex-1">
                     <div className="flex items-center gap-4">

@@ -71,7 +71,7 @@ export default function AdminPlaces() {
         <CardHeader>
           <CardTitle>Todos los Lugares</CardTitle>
           <CardDescription className="text-slate-500">
-            Lista completa de lugares turísticos y negocios
+            Lista completa de lugares turísticos y entidades públicas
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -57,8 +57,41 @@ export default function AdminBusinesses() {
         </Link>
       </div>
 
+<Card>
+        <CardHeader>
+          <CardTitle>Estadísticas</CardTitle>
+          <CardDescription className="text-slate-500">Resumen de negocios por categoría</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="p-4 rounded-lg border">
+              <p className="text-sm text-slate-500 mb-1">Total de Negocios</p>
+              <p className="text-2xl font-bold">{businesses.length}</p>
+            </div>
+            <div className="p-4 rounded-lg border">
+              <p className="text-sm text-slate-500 mb-1">Restaurantes</p>
+              <p className="text-2xl font-bold">
+                {businesses.filter((b) => b.category === "restaurantes").length}
+              </p>
+            </div>
+            <div className="p-4 rounded-lg border">
+              <p className="text-sm text-slate-500 mb-1">Otros</p>
+              <p className="text-2xl font-bold">
+                {businesses.filter((b) => b.category !== "restaurantes").length}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
+          <CardTitle>Todos los Negocios</CardTitle>
+          <CardDescription className="text-slate-500">
+            Listado de negocios registrados en la plataforma
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -70,8 +103,6 @@ export default function AdminBusinesses() {
               />
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
           <div className="space-y-4">
             {filteredBusinesses.length === 0 ? (
               <div className="text-center py-12">
@@ -124,33 +155,6 @@ export default function AdminBusinesses() {
                 </div>
               ))
             )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Estadísticas</CardTitle>
-          <CardDescription className="text-slate-500">Resumen de negocios por categoría</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="p-4 rounded-lg border">
-              <p className="text-sm text-slate-500 mb-1">Total de Negocios</p>
-              <p className="text-2xl font-bold">{businesses.length}</p>
-            </div>
-            <div className="p-4 rounded-lg border">
-              <p className="text-sm text-slate-500 mb-1">Restaurantes</p>
-              <p className="text-2xl font-bold">
-                {businesses.filter((b) => b.category === "restaurantes").length}
-              </p>
-            </div>
-            <div className="p-4 rounded-lg border">
-              <p className="text-sm text-slate-500 mb-1">Otros</p>
-              <p className="text-2xl font-bold">
-                {businesses.filter((b) => b.category !== "restaurantes").length}
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
