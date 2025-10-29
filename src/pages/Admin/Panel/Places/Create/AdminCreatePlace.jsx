@@ -7,7 +7,7 @@ import { ArrowLeft, Building2, MapPin, ChevronRight } from "lucide-react"
 import PublicEntityForm from "./Forms/PublicEntityForm"
 import TouristPlaceForm from "./Forms/TouristPlaceForm"
 
-export default function CreatePlace() {
+export default function AdminCreatePlace() {
   const [placeType, setPlaceType] = useState(null)
   const [step, setStep] = useState(1)
 
@@ -26,7 +26,7 @@ export default function CreatePlace() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold ">Crear Nuevo Lugar</h1>
+            <h1 className="text-3xl font-bold">Crear Nuevo Lugar</h1>
             <p className="mt-1 text-slate-500">Selecciona el tipo de lugar</p>
           </div>
         </div>

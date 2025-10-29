@@ -17,14 +17,18 @@ import DashboardAnalytics from './pages/Business/Dashboard/Analytics/DashboardAn
 import DashboardSettings from './pages/Business/Dashboard/Settings/DashboardSettings'
 // Admin Auth
 import AdminLogin from './pages/Admin/Login/AdminLogin'
+import RequireAdminAuth from './Routes/admin/RequireAdminAuth'
 // Admin Panel
 import PanelLayout from './pages/Admin/Panel/PanelLayout'
 import AdminPanelRedirect from './pages/Admin/Panel/AdminPanelRedirect'
 import AdminDashboard from './pages/Admin/Panel/Dashboard/AdminDashboard'
 import AdminPlaces from './pages/Admin/Panel/Places/AdminPlaces'
-import CreatePlace from './pages/Admin/Panel/Places/Create/CreatePlace'
-// import AdminBusiness from './pages/Admin/Panel/Business/AdminBusiness'
-// import AdminSettings from './pages/Admin/Panel/Settings/AdminSettings'
+import AdminCreatePlace from './pages/Admin/Panel/Places/Create/AdminCreatePlace'
+import AdminBusiness from './pages/Admin/Panel/Business/AdminBusiness'
+import AdminCreateBusiness from './pages/Admin/Panel/Business/Create/AdminCreateBusiness'
+// import AdminEditBusiness from './pages/Admin/Panel/Business/Edit/AdminEditBusiness'
+// import AdminViewBusiness from './pages/Admin/Panel/Business/View/AdminViewBusiness'
+import AdminSettings from './pages/Admin/Panel/Settings/AdminSettings'
 function App() {
 
   return (
@@ -53,13 +57,16 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />}/>
 
           {/* Admin Panel*/}
-          <Route path="/admin/panel/*" element={<PanelLayout />}>
+          <Route path="/admin/panel/*" element={<RequireAdminAuth><PanelLayout /></RequireAdminAuth>}>
             <Route index element={<AdminPanelRedirect />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="places" element={<AdminPlaces />} />
-            <Route path="places/create" element={<CreatePlace />} />
-            {/* <Route path="business" element={<AdminBusiness />} /> */}
-            {/* <Route path="settings" element={<AdminSettings />} /> */}
+            <Route path="places/create" element={<AdminCreatePlace />} />
+            <Route path="business" element={<AdminBusiness />} />
+            <Route path="business/create" element={<AdminCreateBusiness />} />
+            {/* <Route path="business/:id" element={<AdminViewBusiness />} /> */}
+            {/* <Route path="businesses/:id/edit" element={<AdminEditBusiness />} /> */}
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>
       </div>

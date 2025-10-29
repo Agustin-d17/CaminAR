@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Plus, Search, MapPin } from "lucide-react"
+import touristSpotData from "@/data/touristSpots.json"
+import PlacesCard from "./PlacesCard/PlacesCard"
 
+const touristSpots = touristSpotData
 export default function AdminPlaces() {
   const [searchQuery, setSearchQuery] = useState("")
 
@@ -34,7 +37,7 @@ export default function AdminPlaces() {
             <CardDescription className="text-slate-500">Lugares registrados</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">0</p>
+            <p className="text-3xl font-bold">{touristSpots.length}</p>
           </CardContent>
         </Card>
 
@@ -85,8 +88,13 @@ export default function AdminPlaces() {
             </div>
           </div>
 
-          {/* Estado vacío */}
-          <div className="text-center py-12">
+          {/* Muestra las card de lugares en caso de que existan */}
+          {touristSpots.length > 0 ? (
+            touristSpots.map((place) => (
+              <PlacesCard key={place.id} place={place} />
+            ))
+          ) : (
+            <div className="text-center py-12">
             <MapPin className="h-12 w-12 mx-auto mb-4" />
             <p className="text-slate-500 mb-4">No hay lugares registrados aún</p>
             <Link to="/admin/panel/places/create">
@@ -98,6 +106,7 @@ export default function AdminPlaces() {
               </Button>
             </Link>
           </div>
+          )}
         </CardContent>
       </Card>
     </div>

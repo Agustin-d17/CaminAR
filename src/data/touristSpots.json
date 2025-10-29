@@ -6,7 +6,10 @@
     "image": "https://www.tucumanturismo.gob.ar/public/img/museoferroviariogaleria2_v9gzstpb_11-06-2024.jpg",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/Kz9t8GkC7yS4f2rV9",
     "socialLinks": {
@@ -31,7 +34,10 @@
     "image": "https://www.tucumanturismo.gob.ar/public/img/galeriamuseothaui4_4kirfqso_12-07-2024.jpg",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/3Nn3Cg4r3uM34c856",
     "socialLinks": {
@@ -56,7 +62,10 @@
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqNNk-RV1ciKFTb9MlYjCYyjfiiSNchYLuuEzlMnYY1Q6jyzX8kMnWTYkuRY5QM6kDtkxnpEAtclgj_TyFlxo7vAyYTQjQqfPuDf8D5p3Z8cQ9qUWmjjSm8oA-uMaRo0_wAFjEb7w=s1360-w1360-h1020-rw",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/z6eRj97E8o8v973K6",
     "socialLinks": {
@@ -81,7 +90,10 @@
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4noVVlslCdH0g8mF8GvMgAWVOpejZeSnBv3aEf3iTRSO8xq6GLj59ByNv0dszcRKCY0GAtDtdR3LpQi-pRCY8ykF9Xy1Jz7JaTfQFRH5x_oCA8I_Ng2dHoWiYi1ufX5S8MFUwxgS=s1360-w1360-h1020-rw",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
     "socialLinks": {
@@ -106,7 +118,10 @@
     "image": "https://hosteriatafiviejo.com.ar/wp-content/uploads/2024/01/Hosteria-Atahualpa-Yupanqui.jpg",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
     "socialLinks": {
@@ -131,7 +146,10 @@
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq6Fh1MvsWO8wulpOwtR8ZNMeqkadViwlvoahNLPPluEmIMS6zgISu_cdlga5FT1svjH_csx5D3cX7q2zWA_iAvnTon3xQXIItUp8Q5fhklEwVAmXRA31cku94PSozaCJM2hiRMQg=s1360-w1360-h1020-rw",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
     "socialLinks": {
@@ -156,7 +174,10 @@
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4no2b7ZXJL4giRCTbOtTRTq1BxdpICxc1SIqv85uBhCpGZNggHUdBRGcqaOc9uqPUrWrWfpIXyIcAxYc2ITboIFANdcyQ5pfqJtd7ZhZ-LPXU6V4j-_bIDttDA4QEcNPVtBIoqAtRA=w243-h174-n-k-no-nu",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/rTpCRNiqjkxSmqFR9",
     "socialLinks": {
@@ -181,7 +202,10 @@
     "image": "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqPOB3U-EX0b-h1wutMIhlbv4vdyPB6MImE2410aglvkCQOeplmGz5fBGTKwqgDkF5OQApxbEcmsjSghrEL3qLAN4ZMsiQiHQhxIWpDpDBkAyp9asyllqkHLQsX9ohv4T4URps=s1360-w1360-h1020-rw",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
     "socialLinks": {
@@ -206,7 +230,10 @@
     "image": "",
     "categoryId": "lugares_turisticos",
     "subCategoryId": null,
-    "rating": 4.2,
+    "rating": {
+      "value": 4,
+      "source": ""
+    },
     "images": ["https://picsum.photos/200", "https://picsum.photos/200", "https://picsum.photos/200"],
     "googleMapsLink": "https://maps.app.goo.gl/9Wv22dJz7y2JqJ4T9",
     "socialLinks": {

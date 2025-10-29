@@ -1,38 +1,53 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-// Importa tus componentes de UI (asumo que estos son componentes JSX)
+// Componentes UI
 import { Button } from "@/components/ui/button" 
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-// Importa los iconos de lucide-react
+// Iconos de lucide-react
 import { ArrowLeft, Eye, EyeOff, AlertCircle, } from "lucide-react"
+// Importacion de la coleccion de usuarios simulando una base de datos
+import adminUsers from "@/data/adminUsers.json"
 
-// Componente JSX puro (eliminada la definición de tipo 'React.FC')
+
 export default function AdminLogin() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const [userName, setUsername] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  // Manejador de formulario en JS (eliminada la definición de tipo ': React.FormEvent')
-  const handleSubmit = async (e) => {
+  // HandleLogin con simulacion de autenticacion y llamada a base de datos
+  const handleLogin = async (e) => {
     e.preventDefault()
-    setError("")
     setIsLoading(true)
+    setError("")
 
     try {
-      // Demo credentials
-      if (userName === "admin_caminar" && password === "admin123") {
-        localStorage.setItem("currentAdmin", JSON.stringify({ userName, role: "admin" }))
+      const foundUser = adminUsers.find(
+      (adminUser) => 
+        (adminUser.account.username === username || adminUser.account.loginEmail === username) && 
+        adminUser.account.password === password
+      )
+
+      if (foundUser) {
+        localStorage.setItem("currentAdmin", JSON.stringify({
+          id: foundUser.id,
+          role: foundUser.permissions.role,
+          scope: foundUser.permissions.scope,
+          name: foundUser.profile.name,
+          email: foundUser.profile.email,
+          loginTime: new Date().toISOString(),
+        }))
         navigate("/admin/panel")
       } else {
-        setError("Email o contraseña incorrectos")
+        setError("Credenciales incorrectas o usuario no autorizado.")
       }
-    } catch (err) {
-      setError("Ocurrió un error al iniciar sesión")
+    } catch (error) {
+      console.error("Error al iniciar sesion:", error)
+      setError("Ocurrió un error durante el inicio de sesión. Por favor, inténtalo de nuevo.")
     } finally {
       setIsLoading(false)
     }
@@ -66,13 +81,7 @@ export default function AdminLogin() {
             <CardDescription>Ingresa tus credenciales para continuar</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 mb-4">
-              <p className="text-sm font-medium text-green-600 dark:text-green-400 mb-1">Administrador de prueba:</p>
-              <p className="text-xs text-green-600/80 dark:text-green-400/80">Username: admin_caminar</p>
-              <p className="text-xs text-green-600/80 dark:text-green-400/80">Contraseña: admin123</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4">
               {error && (
                 <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 flex items-start gap-2">
                   <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
@@ -86,9 +95,9 @@ export default function AdminLogin() {
                   <Input
                     id="username"
                     type="text"
-                    value={userName}
+                    value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
+                    placeholder="Usuario o correo electrónico"
                     required
                   />
                 </div>
@@ -120,13 +129,6 @@ export default function AdminLogin() {
               <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
                 {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
               </Button>
-
-              {/* <div className="text-center text-sm text-muted-foreground">
-                ¿No tienes una cuenta?{" "}
-                <Link to="/business/register" className="text-primary hover:underline cursor-pointer"> 
-                  Regístrate aquí
-                </Link>
-              </div> */}
             </form>
           </CardContent>
         </Card>

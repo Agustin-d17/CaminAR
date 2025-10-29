@@ -38,10 +38,10 @@ const navigationItems = [
     }
 ]
 
-export function AppSidebar({ ...props }) {
+export function AdminAppSidebar({ ...props }) {
   const navigate = useNavigate()
   const handleLogout = () => {
-    localStorage.removeItem("currentUser")
+    localStorage.removeItem("currentAdmin")
     navigate("/")
   }
 

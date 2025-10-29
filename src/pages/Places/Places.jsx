@@ -31,9 +31,9 @@ export default function PlacesPage() {
       case "alphabetical-desc":
         return spots.sort((a, b) => b.name.localeCompare(a.name))
       case "rating-desc":
-        return spots.sort((a, b) => b.rating - a.rating)
+        return spots.sort((a, b) => b.rating.value - a.rating.value)
       case "rating-asc":
-        return spots.sort((a, b) => a.rating - b.rating)
+        return spots.sort((a, b) => a.rating.value - b.rating.value)
       default:
         return spots
     }
@@ -91,7 +91,7 @@ export default function PlacesPage() {
               name={spot.name}
               description={spot.description}
               image={spot.image}
-              rating={spot.rating}
+              rating={spot.rating.value}
               category={categories.find(c => c.id === spot.categoryId)?.name}
             />
           ))}
