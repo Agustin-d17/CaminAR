@@ -439,7 +439,7 @@ export default function BusinessRegister() {
             </Button>
           </Link>
           <div className="absolute left-1/2 transform -translate-x-1/2">
-            <span className="text-xl font-bold">CaminAR</span>
+            <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
           </div>
           <div></div>
         </div>

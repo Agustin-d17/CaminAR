@@ -54,8 +54,8 @@ export default function PlacesPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
         </Link>
-        <div className="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold text-primary">
-          CaminAR
+        <div className="absolute left-1/2 transform -translate-x-1/2 text-primary">
+          <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
         </div>
       </nav>
 

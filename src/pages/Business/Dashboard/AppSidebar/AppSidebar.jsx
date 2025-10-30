@@ -1,5 +1,5 @@
 import React from "react"
-import { ChevronRight, Home, LayoutDashboard, LogOut, Settings, Users, User, ChartColumn} from "lucide-react"
+import { ChevronRight, Home, LayoutDashboard, LogOut, Settings, Users, User, ChartColumn, MapPin} from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
   Sidebar,
@@ -44,10 +44,12 @@ export function AppSidebar({ ...props }) {
     <Sidebar {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <LayoutDashboard className="h-4 w-4" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-950 text-primary-foreground">
+            <MapPin className="h-4 w-4" />
           </div>
-          <div className="font-semibold">CaminAR</div>
+          <div className="font-semibold">
+            <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
+          </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
