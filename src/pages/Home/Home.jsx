@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import categories from "@/data/categories.json"
+import Logo from "@/assets/images/Caminar logo.png"
 
 export default function Home() {
   return (
@@ -18,9 +19,9 @@ export default function Home() {
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
-        {/* Navigation Header - removed login button */}
+        {/* Navigation Header */}
         <nav className="flex justify-center items-center p-4">
-          <div className="text-xl font-bold text-white">CaminAR</div>
+          {/* <div className="text-xl font-bold text-white">CaminAR</div> */}
         </nav>
 
         {/* Main Content */}
@@ -29,7 +30,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="w-32 h-32 mx-auto mb-6 flex items-center justify-center">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Dise%C3%B1o%20sin%20t%C3%ADtulo%20%281%29-S9aTFHpDXbbV7dx3b4hEhFv4huAYGD.png"
+                src={Logo}
                 alt="Turismo Tafi Viejo Logo"
                 className="w-full h-full object-contain rounded-full" // agregado rounded-full para hacer el logo circular
               />

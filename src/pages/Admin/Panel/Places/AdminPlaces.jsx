@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Plus, Search, MapPin } from "lucide-react"
-import touristSpotData from "@/data/touristSpots.json"
 import PlacesCard from "./PlacesCard/PlacesCard"
+import touristSpotData from "@/data/touristSpots.json"
 
 const touristSpots = touristSpotData
 export default function AdminPlaces() {

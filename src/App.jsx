@@ -24,6 +24,8 @@ import AdminPanelRedirect from './pages/Admin/Panel/AdminPanelRedirect'
 import AdminDashboard from './pages/Admin/Panel/Dashboard/AdminDashboard'
 import AdminPlaces from './pages/Admin/Panel/Places/AdminPlaces'
 import AdminCreatePlace from './pages/Admin/Panel/Places/Create/AdminCreatePlace'
+// import AdminEditPlace from './pages/Admin/Panel/Places/Edit/AdminEditPlace'
+import AdminViewPlace from './pages/Admin/Panel/Places/View/AdminViewPlace'
 import AdminBusiness from './pages/Admin/Panel/Business/AdminBusiness'
 import AdminCreateBusiness from './pages/Admin/Panel/Business/Create/AdminCreateBusiness'
 // import AdminEditBusiness from './pages/Admin/Panel/Business/Edit/AdminEditBusiness'
@@ -60,8 +62,12 @@ function App() {
           <Route path="/admin/panel/*" element={<RequireAdminAuth><PanelLayout /></RequireAdminAuth>}>
             <Route index element={<AdminPanelRedirect />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            {/* Admin Places */}
             <Route path="places" element={<AdminPlaces />} />
             <Route path="places/create" element={<AdminCreatePlace />} />
+            <Route path="places/:id" element={<AdminViewPlace />} />
+            {/* <Route path="places/:id/edit" element={<AdminEditPlace />} /> */}
+            {/* Admin Business */}
             <Route path="business" element={<AdminBusiness />} />
             <Route path="business/create" element={<AdminCreateBusiness />} />
             {/* <Route path="business/:id" element={<AdminViewBusiness />} /> */}
