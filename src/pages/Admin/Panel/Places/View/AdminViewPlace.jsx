@@ -1,83 +1,162 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
+import { supabase } from "@/lib/supabaseClient"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, MapPin, Star, Instagram, Facebook, Twitter, Pencil, Trash2 } from "lucide-react"
-import touristSpotData from "@/data/touristSpots.json"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {
+  ArrowLeft,
+  MapPin,
+  Star,
+  Instagram,
+  Facebook,
+  Twitter,
+  Pencil,
+  Trash2,
+  MoreVertical
+} from "lucide-react"
 
-const touristSpots = touristSpotData
 
 export default function AdminViewPlace() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [place, setPlace] = useState(null)
 
+  const [place, setPlace] = useState(null)
+  const [categories, setCategories] = useState([])
+  const [localities, setLocalities] = useState([])
+  const [provinces, setProvinces] = useState([])
+
+  // ---------------------------
+  // 1. Obtener datos de Supabase
+  // ---------------------------
   useEffect(() => {
-    const foundPlace = touristSpots.find((spot) => spot.id === parseInt(id))
-    setPlace(foundPlace)
+    async function fetchEverything() {
+      // Lugar
+      const { data: placeData } = await supabase
+        .from("places")
+        .select("*")
+        .eq("id", id)
+        .single()
+
+      // Categorías
+      const { data: categoriesData } = await supabase
+        .from("categories")
+        .select("*")
+
+      // Localidades
+      const { data: localitiesData } = await supabase
+        .from("localities")
+        .select("*")
+
+      // Provincias
+      const { data: provincesData } = await supabase
+        .from("provinces")
+        .select("*")
+
+      setPlace(placeData)
+      setCategories(categoriesData || [])
+      setLocalities(localitiesData || [])
+      setProvinces(provincesData || [])
+    }
+
+    fetchEverything()
   }, [id])
 
+  // -----------------------------
+  // 2. Si no existe el lugar
+  // -----------------------------
   if (!place) {
     return (
       <div className="flex items-center justify-center h-96">
-        <p className="text-slate-400">Ups! Lugar no encontrado con el ID proporcionado</p>
+        <p className="text-slate-400">
+          Ups! Lugar no encontrado con el ID proporcionado
+        </p>
       </div>
     )
   }
 
+  // -----------------------------
+  // 3. Resolver nombres reales
+  // -----------------------------
+  const categoryName =
+    categories.find((c) => c.id === place.category_id)?.name ||
+    "Sin categoría"
+
+  const localityName =
+    localities.find((l) => l.id === place.locality_id)?.name ||
+    "Sin localidad"
+
+  const provinceName =
+    provinces.find((p) => p.id === place.province_id)?.name ||
+    "Sin provincia"
+
+  // -----------------------------
+  // 4. Render
+  // -----------------------------
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to="/admin/panel/places">
-            <Button
-              variant="outline"
-              size="icon"
-              className="cursor-pointer"
-            >
+            <Button variant="outline" size="icon">
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
 
           <div>
             <h1 className="text-3xl font-bold">{place.name}</h1>
-            <p className="text-slate-500 mt-1">{place.categoryId}</p>
+            <p className="text-slate-500 mt-1">
+              {categoryName} • {localityName}, {provinceName}
+            </p>
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <Link to={`/admin/panel/places/${place.id}/edit`}>
-            <Button className="gap-2 bg-blue-950 hover:bg-blue-900 cursor-pointer">
-              <Pencil className="h-4 w-4" />
-              Editar
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon"  className="cursor-pointer">
+              <MoreVertical className="h-4 w-4" />
             </Button>
-          </Link>
+          </DropdownMenuTrigger>
 
-          <Button
-            variant="outline"
-            className="gap-2 border hover:text-red-600 cursor-pointer"
-          >
-            <Trash2 className="h-4 w-4" />
-            Eliminar
-          </Button>
-        </div>
+          <DropdownMenuContent align="end">
+            <Link to={`/admin/panel/places/${place.id}/edit`}>
+              <DropdownMenuItem className="gap-2 cursor-pointer">
+                <Pencil className="h-4 w-4" />
+                Editar
+              </DropdownMenuItem>
+            </Link>
+
+            <DropdownMenuItem className="gap-2 text-red-500 cursor-pointer">
+              <Trash2 className="h-4 w-4" />
+              Eliminar
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
+      {/* Info */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Información General</CardTitle>
           </CardHeader>
+
           <CardContent className="space-y-4">
             <div>
               <p className="text-sm text-slate-500">Descripción</p>
               <p className="mt-1">{place.description}</p>
             </div>
 
-            {place.fullDescription && (
+            {place.full_description && (
               <div>
                 <p className="text-sm text-slate-500">Descripción Completa</p>
-                <p className="mt-1">{place.fullDescription}</p>
+                <p className="mt-1">{place.full_description}</p>
               </div>
             )}
 
@@ -89,43 +168,37 @@ export default function AdminViewPlace() {
           </CardContent>
         </Card>
 
+        {/* Images */}
         <Card>
           <CardHeader>
             <CardTitle>Imágenes</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              {place.images && place.images.length > 0 ? (
-                place.images.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img || "/placeholder.svg"}
-                    alt={`${place.name} ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                ))
-              ) : (
+              {place.images?.map((img, index) => (
                 <img
-                  src={place.image || "/placeholder.svg"}
-                  alt={place.name}
-                  className="w-full h-32 object-cover rounded-lg col-span-2"
+                  key={index}
+                  src={img}
+                  alt={`${place.name} ${index + 1}`}
+                  className="w-full h-32 object-cover rounded-lg"
                 />
-              )}
+              ))}
             </div>
           </CardContent>
         </Card>
       </div>
 
+      {/* Links */}
       <Card>
         <CardHeader>
           <CardTitle>Enlaces y Ubicación</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {place.googleMapsLink && (
+          {place.google_maps_link && (
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-slate-500" />
               <a
-                href={place.googleMapsLink}
+                href={place.google_maps_link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline"
@@ -135,43 +208,27 @@ export default function AdminViewPlace() {
             </div>
           )}
 
-          {place.socialLinks && (
-            <div className="space-y-2">
-              <p className="text-sm text-slate-500 font-semibold">Redes Sociales</p>
-              <div className="flex gap-4">
-                {place.socialLinks.instagram && (
-                  <a
-                    href={place.socialLinks.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-slate-300 hover:text-pink-400"
-                  >
-                    <Instagram className="h-5 w-5" /> Instagram
-                  </a>
-                )}
-                {place.socialLinks.facebook && (
-                  <a
-                    href={place.socialLinks.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-slate-300 hover:text-blue-400"
-                  >
-                    <Facebook className="h-5 w-5" /> Facebook
-                  </a>
-                )}
-                {place.socialLinks.twitter && (
-                  <a
-                    href={place.socialLinks.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-slate-300 hover:text-sky-400"
-                  >
-                    <Twitter className="h-5 w-5" /> Twitter
-                  </a>
-                )}
-              </div>
+          {/* Redes */}
+          <div className="space-y-2">
+            <p className="text-sm text-slate-500 font-semibold">Redes Sociales</p>
+            <div className="flex gap-4">
+              {place.social_links?.instagram && (
+                <a className="flex items-center gap-2">
+                  <Instagram className="h-5 w-5" /> Instagram
+                </a>
+              )}
+              {place.social_links?.facebook && (
+                <a className="flex items-center gap-2">
+                  <Facebook className="h-5 w-5" /> Facebook
+                </a>
+              )}
+              {place.social_links?.twitter && (
+                <a className="flex items-center gap-2">
+                  <Twitter className="h-5 w-5" /> Twitter
+                </a>
+              )}
             </div>
-          )}
+          </div>
         </CardContent>
       </Card>
     </div>

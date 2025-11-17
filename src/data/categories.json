@@ -67,7 +67,17 @@
     "categoryId": "restaurantes",
     "name": "Restaurantes y Cafeterías",
     "icon": "",
-    "href": "/places?category=restaurantes"
+    "href": "/places?category=restaurantes",
+    "subCategories": [
+      {
+        "subCategoryId": "restaurante",
+        "name": "Restaurante"
+      },
+      {
+        "subCategoryId": "cafeteria",
+        "name": "Cafetería"
+      }
+    ]
   },
   {
     "categoryId": "negocios",

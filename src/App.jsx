@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //Pages
 import Home from "./pages/Home/Home"
 import Places from "./pages/Places/Places"
-import Place from "./pages/Place/Place"
+import PlacePage from "./pages/Place/PlacePage"
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 // Bussiness Auth
 import BusinessRegister from "./pages/Business/Register/BusinessRegister"
@@ -24,12 +24,12 @@ import AdminPanelRedirect from './pages/Admin/Panel/AdminPanelRedirect'
 import AdminDashboard from './pages/Admin/Panel/Dashboard/AdminDashboard'
 import AdminPlaces from './pages/Admin/Panel/Places/AdminPlaces'
 import AdminCreatePlace from './pages/Admin/Panel/Places/Create/AdminCreatePlace'
-// import AdminEditPlace from './pages/Admin/Panel/Places/Edit/AdminEditPlace'
+import AdminEditPlace from './pages/Admin/Panel/Places/Edit/AdminEditPlace'
 import AdminViewPlace from './pages/Admin/Panel/Places/View/AdminViewPlace'
 import AdminBusiness from './pages/Admin/Panel/Business/AdminBusiness'
 import AdminCreateBusiness from './pages/Admin/Panel/Business/Create/AdminCreateBusiness'
-// import AdminEditBusiness from './pages/Admin/Panel/Business/Edit/AdminEditBusiness'
-// import AdminViewBusiness from './pages/Admin/Panel/Business/View/AdminViewBusiness'
+import AdminEditBusiness from './pages/Admin/Panel/Business/Edit/AdminEditBusiness'
+import AdminViewBusiness from './pages/Admin/Panel/Business/View/AdminViewBusiness'
 import AdminSettings from './pages/Admin/Panel/Settings/AdminSettings'
 function App() {
 
@@ -40,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<Places />} />
-          <Route path="/place/:id" element={<Place />} />
+          <Route path="/place/:id" element={<PlacePage />} />
           
           {/*Business Auth */}
           <Route path="/business/register" element={<BusinessRegister />} />
@@ -66,12 +66,12 @@ function App() {
             <Route path="places" element={<AdminPlaces />} />
             <Route path="places/create" element={<AdminCreatePlace />} />
             <Route path="places/:id" element={<AdminViewPlace />} />
-            {/* <Route path="places/:id/edit" element={<AdminEditPlace />} /> */}
+            <Route path="places/:id/edit" element={<AdminEditPlace />} />
             {/* Admin Business */}
             <Route path="business" element={<AdminBusiness />} />
             <Route path="business/create" element={<AdminCreateBusiness />} />
-            {/* <Route path="business/:id" element={<AdminViewBusiness />} /> */}
-            {/* <Route path="businesses/:id/edit" element={<AdminEditBusiness />} /> */}
+            <Route path="business/:id" element={<AdminViewBusiness />} />
+            <Route path="businesses/:id/edit" element={<AdminEditBusiness />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Routes>

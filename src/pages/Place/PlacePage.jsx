@@ -1,19 +1,42 @@
 
+import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
-import { ArrowLeft, Star, MapPin, Instagram, Facebook, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { supabase } from "@/lib/supabaseClient"
 import ImageCarousel from "@/components/ImageCarousel/ImageCarousel"
-import touristSpotsData from "@/data/touristSpots.json"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft, Star, MapPin, Instagram, Facebook, X } from "lucide-react"
 
-const touristSpots = touristSpotsData
 
 export default function PlacePage() {
-  const { id } = useParams()
-  const place = touristSpots.find((spot) => spot.id === Number.parseInt(id))
+  const { id } = useParams()  
+  const [place, setPlace] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  if (!place) {
-    return <div>Lugar no encontrado</div>
-  }
+// ----------------Llamdo a la base de datos para obtener un lugar especifico----------------
+  useEffect(() => {
+    const fetchPlace = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("places")
+          .select("*")
+          .eq("id", id)
+          .single()
+
+        if (error) throw error
+        setPlace(data)
+      } catch (error) {
+        console.error("Error al obtener el lugar:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchPlace()
+  }, [id])
+// ----------------Fin del llamado a la base de datos----------------
+  
+  if (loading) return <div className="text-center mt-10 text-gray-400">Cargando...</div>
+  if (!place) return <div className="text-center mt-10 text-gray-400">Lugar no encontrado</div>
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,20 +74,20 @@ export default function PlacePage() {
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{place.name}</h1>
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-              <span className="font-semibold text-lg">{place.googleRating}</span>
+              <span className="font-semibold text-lg">{place.rating.value}</span>
             </div>
           </div>
 
           {/* Full Description */}
           <div className="prose prose-gray max-w-none">
-            <p className="text-foreground/90 leading-relaxed">{place.fullDescription}</p>
+            <p className="text-foreground/90 leading-relaxed">{place.full_description}</p>
           </div>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Google Maps Button */}
-            <Button asChild className="flex items-center gap-2">
-              <a href={place.googleMapsLink} target="_blank" rel="noopener noreferrer">
+            <Button asChild className="flex items-center gap-2 cursor-pointer">
+              <a href={place.google_maps_link} target="_blank" rel="noopener noreferrer">
                 <MapPin className="h-4 w-4" />
                 Ver en Google Maps
               </a>

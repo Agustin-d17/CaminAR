@@ -23,7 +23,7 @@ export default function BusinessCard({ business }) {
 
                         <div className="flex flex-wrap items-center gap-2">
                             <Badge variant="secondary" className="text-slate-950">
-                                {business.profile.categoryId}
+                                {business.categoryId}
                             </Badge>
                             <span className="text-sm text-slate-400 truncate">
                                 {business.location.localityId}, {business.location.provinceId}

@@ -1,49 +1,81 @@
+import { useEffect, useState, useMemo } from "react"
+import { Link, useSearchParams } from "react-router-dom"
+import { supabase } from "@/lib/supabaseClient"
 import { TouristCard } from "@/components/TouristCard/TouristCard"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Link } from "react-router-dom"
-import { useSearchParams } from "react-router-dom"
-import { useState, useMemo } from "react"
-import touristSpotsData from "@/data/touristSpots.json"
 import { ArrowLeft } from "lucide-react"
-import categories from "@/data/categories.json"
-
-const touristSpots = touristSpotsData
 
 export default function PlacesPage() {
   const [searchParams] = useSearchParams()
   const category = searchParams.get("category")
   const [sortOption, setSortOption] = useState("alphabetical-asc")
+  const [places, setPlaces] = useState([])
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
+  // ----------------Obtener categorías y lugares desde la base de datos----------------
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const [placesRes, categoriesRes] = await Promise.all([
+          supabase.from("places").select("*"),
+          supabase.from("categories").select("*")
+        ])
+
+        if (placesRes.error) throw placesRes.error
+        if (categoriesRes.error) throw categoriesRes.error
+
+        setPlaces(placesRes.data || [])
+        setCategories(categoriesRes.data || [])
+      } catch (err) {
+        console.error("Error al obtener datos:", err)
+        setError("Error al obtener los datos.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+// ----------------Fin de la obtencion y llamado a la base de datos----------------
+  
+  // Filtrar por categoría seleccionada
   const filteredSpots = useMemo(() => {
-    if (!category) return touristSpots
-    return touristSpots.filter(
-      (spot) => spot.categoryId === category
-    )
-  }, [category])
+    if (!category) return places
+    return places.filter((spot) => spot.category_id === category)
+  }, [category, places])
 
+  // Ordenar resultados
   const sortedSpots = useMemo(() => {
     const spots = [...filteredSpots]
-
     switch (sortOption) {
       case "alphabetical-asc":
         return spots.sort((a, b) => a.name.localeCompare(b.name))
       case "alphabetical-desc":
         return spots.sort((a, b) => b.name.localeCompare(a.name))
       case "rating-desc":
-        return spots.sort((a, b) => b.rating.value - a.rating.value)
+        return spots.sort((a, b) => (b.rating?.value || 0) - (a.rating?.value || 0))
       case "rating-asc":
-        return spots.sort((a, b) => a.rating.value - b.rating.value)
+        return spots.sort((a, b) => (a.rating?.value || 0) - (b.rating?.value || 0))
       default:
         return spots
     }
   }, [filteredSpots, sortOption])
 
+  // Obtener título dinámico
   const getTitle = () => {
-    if (!category) return "Descubrí Tafi Viejo"
-    const cat = categories.find(c => c.categoryId === category)
+    if (!category) return "Descubrí Tafí Viejo"
+    const cat = categories.find((c) => c.id === category)
     return cat ? cat.name : category
   }
+  // Loading / Error States
+  if (loading) return <p className="text-center mt-20 text-muted-foreground">Cargando lugares...</p>
+  if (error) return <p className="text-center mt-20 text-red-500">{error}</p>
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,7 +124,7 @@ export default function PlacesPage() {
               description={spot.description}
               image={spot.image}
               rating={spot.rating.value}
-              category={categories.find(c => c.id === spot.categoryId)?.name}
+              category={categories.find(c => c.id === spot.category_id)?.name}
             />
           ))}
         </div>

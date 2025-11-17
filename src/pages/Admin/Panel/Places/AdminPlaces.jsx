@@ -1,15 +1,72 @@
-import { useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Link } from "react-router-dom"
+import { supabase } from "@/lib/supabaseClient"
+
+import PlacesCard from "./PlacesCard/PlacesCard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Plus, Search, MapPin } from "lucide-react"
-import PlacesCard from "./PlacesCard/PlacesCard"
-import touristSpotData from "@/data/touristSpots.json"
 
-const touristSpots = touristSpotData
+import { Plus, Search, MapPin } from "lucide-react"
+
 export default function AdminPlaces() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [places, setPlaces] = useState([])
+  const [categories, setCategories] = useState([])
+  const [localities, setLocalities] = useState([])
+  const [provinces, setProvinces] = useState([])
+
+  // Cargar lugares desde Supabase
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const [placesRes, categoriesRes, localitiesRes, provincesRes] = await Promise.all([
+          supabase.from("places").select("*"),
+          supabase.from("categories").select("*"),
+          supabase.from("localities").select("*"),
+          supabase.from("provinces").select("*")
+        ])
+
+        if (placesRes.error || categoriesRes.error || localitiesRes.error || provincesRes.error) {
+          console.error("Error al obtener datos:", {
+            places: placesRes.error,
+            categories: categoriesRes.error,
+            localities: localitiesRes.error,
+            provinces: provincesRes.error
+          })
+          return
+        }
+
+        setPlaces(placesRes.data || [])
+        setCategories(categoriesRes.data || [])
+        setLocalities(localitiesRes.data || [])
+        setProvinces(provincesRes.data || [])
+      } catch (err) {
+        console.error("Error general:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPlaces()
+  }, [])
+
+  // Filtrado de búsqueda
+  const filteredPlaces = useMemo(() => {
+    return places.filter((place) =>
+      place.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [places, searchQuery])
+
+  // Contadores
+  const total = places.length
+  const touristCount = places.filter(p => p.category_id === "34e41b4a-a123-4fef-87c2-07f6a87d7b3b").length // Lugares turísticos
+  const publicCount = places.filter(p => p.category_id === "c1b89d2c-1c60-4055-9f31-01f08e4db90f").length // Entidades públicas
+
+  if (loading) {
+    return <p className="text-center text-slate-500">Cargando lugares...</p>
+  }
 
   return (
     <div className="space-y-6">
@@ -37,31 +94,29 @@ export default function AdminPlaces() {
             <CardDescription className="text-slate-500">Lugares registrados</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">{touristSpots.length}</p>
-          </CardContent>
-        </Card>
-
-        <Card className="">
-          <CardHeader>
-            <CardTitle>Lugares Turísticos</CardTitle>
-            <CardDescription className="text-slate-500">
-              Monumentos, parques, museos
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">0</p>
+            <p className="text-3xl font-bold">{total}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Entidades Publicas</CardTitle>
+            <CardTitle>Lugares Turísticos</CardTitle>
+            <CardDescription className="text-slate-500">Monumentos, parques, museos</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold">{touristCount}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Entidades Públicas</CardTitle>
             <CardDescription className="text-slate-500">
-              Restaurantes y servicios
+              Museos, centros culturales, universidades
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">0</p>
+            <p className="text-3xl font-bold">{publicCount}</p>
           </CardContent>
         </Card>
       </div>
@@ -88,24 +143,22 @@ export default function AdminPlaces() {
             </div>
           </div>
 
-          {/* Muestra las card de lugares en caso de que existan */}
-          {touristSpots.length > 0 ? (
-            touristSpots.map((place) => (
-              <PlacesCard key={place.id} place={place} />
+          {/* Muestra las cards de lugares */}
+          {filteredPlaces.length > 0 ? (
+            filteredPlaces.map((place) => (
+              <PlacesCard key={place.id} place={place} categories={categories} localities={localities} provinces={provinces} />
             ))
           ) : (
             <div className="text-center py-12">
-            <MapPin className="h-12 w-12 mx-auto mb-4" />
-            <p className="text-slate-500 mb-4">No hay lugares registrados aún</p>
-            <Link to="/admin/panel/places/create">
-              <Button
-                className="gap-2 cursor-pointer"
-              >
-                <Plus className="h-4 w-4" />
-                Crear Primer Lugar
-              </Button>
-            </Link>
-          </div>
+              <MapPin className="h-12 w-12 mx-auto mb-4" />
+              <p className="text-slate-500 mb-4">No hay lugares registrados aún</p>
+              <Link to="/admin/panel/places/create">
+                <Button className="gap-2 cursor-pointer">
+                  <Plus className="h-4 w-4" />
+                  Crear Primer Lugar
+                </Button>
+              </Link>
+            </div>
           )}
         </CardContent>
       </Card>

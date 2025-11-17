@@ -1,9 +1,21 @@
-import { Edit, Eye, Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Edit, Eye, Trash2 } from "lucide-react"
 
-export default function PlacesCard({ place }) {
+export default function PlacesCard({ place, categories = [], localities = [], provinces = [] }) {
+
+    const categoryName = categories.find((c) => c.id === place.category_id)?.name || "Sin categoría"
+    const localityName =
+      localities.find((l) => l.id === place.locality_id)?.name || "Sin localidad"
+    const provinceName =
+      provinces.find((p) => p.id === place.province_id)?.name || "Sin provincia"
+
+    const handleDelete = (id) => {
+      if (confirm("¿Seguro que deseas eliminar este lugar?")) {
+        console.log("Eliminar lugar:", id)
+      }
+    }
     return (
         <div className="mb-4">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 rounded-lg border gap-4">
@@ -21,10 +33,10 @@ export default function PlacesCard({ place }) {
 
                         <div className="flex flex-wrap items-center gap-2">
                             <Badge variant="secondary" className="text-slate-950">
-                                {place.categoryId}
+                                {categoryName}
                             </Badge>
                             <span className="text-sm text-slate-400 truncate">
-                                {place.location.localityId}, {place.location.provinceId}
+                                {localityName}, {provinceName}
                             </span>
                         </div>
 

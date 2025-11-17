@@ -1,9 +1,37 @@
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import categories from "@/data/categories.json"
+import { supabase } from "@/lib/supabaseClient"
+import { Button } from "@/components/ui/button"
 import Logo from "@/assets/images/Caminar logo.png"
 
 export default function Home() {
+  // ----------------Llamado a la base de datos desde el front, Reemplazar al agregar backend----------------
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const { data, error } = await supabase.from("categories").select("*")
+        if (error) throw error
+        setCategories(data)
+      } catch (err) {
+        console.error("Error al obtener categorías:", err.message)
+        setError("No se pudieron cargar las categorías.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+// ----------------Termina el llamado a la base de datos----------------
+
+
   return (
     <div className="min-h-screen relative">
       {/* Background Image */}
@@ -44,7 +72,7 @@ export default function Home() {
           {/* Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl w-full">
             {categories.map((category) => (
-              <Link key={category.categoryId} to={`/places?category=${category.categoryId}`}>
+              <Link key={category.id} to={`/places?category=${category.id}`}>
                 <div className="bg-transparent border-2 border-white rounded-full p-6 text-center hover:bg-white/40 hover:scale-105 transition-all duration-300 cursor-pointer">
                   <h3 className="text-xl font-semibold text-white">{category.name}</h3>
                 </div>

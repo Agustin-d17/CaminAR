@@ -1,41 +1,91 @@
-{
-  "id": "",
-  "categoryId": "",
-  "subCategoryId": "",
-  "profile": {
-    "businessName": "",
-    "description": "",
-    "fullDescription": "",
-    "image": "",
-    "images": [],
-    "links": {
-      "googleMapsLink": "",
-      "facebookLink": "",
-      "instagramLink": "",
-      "website": ""
+[
+  {
+    "id": "",
+    "categoryId": "",
+    "subCategoryId": "",
+    "profile": {
+      "businessName": "",
+      "description": "",
+      "fullDescription": "",
+      "image": "",
+      "images": [],
+      "links": {
+        "googleMapsLink": "",
+        "facebookLink": "",
+        "instagramLink": "",
+        "twitterLink": "",
+        "website": ""
+      },
+      "contact": {
+        "phoneNumber": "",
+        "contactEmail": ""
+      }
     },
-    "contact": {
-      "phoneNumber": "",
-      "contactEmail": ""
+    "location": {
+        "address": "",
+        "localityId": "",
+        "provinceId": "",
+        "lat": 0,
+        "lng": 0
+      },
+    "rating": {
+      "value": 0,
+      "source": ""
+    },
+    "account": {
+      "loginEmail": "",
+      "passwordHash": "",
+      "verified": false,
+      "status": "",
+      "createdAt": "",
+      "updatedAt": ""
     }
   },
-  "location": {
-      "address": "",
-      "localityId": "",
-      "provinceId": "",
-      "lat": 0,
-      "lng": 0
+  {
+    "id": 1,
+    "categoryId": "restaurantes",
+    "subCategoryId": "cafeteria",
+    "profile": {
+      "businessName": "Cafetería La Esquina",
+      "description": "Café artesanal y pastelería casera.",
+      "fullDescription": "Cafetería local con ambiente tranquilo, ideal para trabajar o reunirse. Ofrecemos café de especialidad, pastelería artesanal y opciones saludables.",
+      "image": "https://example.com/images/cafeteria-main.jpg",
+      "images": [
+        "https://example.com/images/cafeteria-1.jpg",
+        "https://example.com/images/cafeteria-2.jpg",
+        "https://example.com/images/cafeteria-3.jpg"
+      ],
+      "links": {
+        "googleMapsLink": "https://maps.google.com/?q=Cafeteria+La+Esquina",
+        "facebookLink": "https://facebook.com/cafeteria-la-esquina",
+        "instagramLink": "https://instagram.com/cafeteria.la.esquina",
+        "twitterLink": "https://twitter.com/cafesquina",
+        "website": "https://cafeteria-la-esquina.com"
+      },
+      "contact": {
+        "phoneNumber": "+54 11 5555 1234",
+        "contactEmail": "contacto@cafeteria-la-esquina.com"
+      }
     },
-  "rating": {
-    "value": 0,
-    "source": ""
-  },
-  "account": {
-    "loginEmail": "",
-    "passwordHash": "",
-    "verified": false,
-    "status": "",
-    "createdAt": "",
-    "updatedAt": ""
-  }
-}
+    "location": {
+      "address": "Av. Siempre Viva 742",
+      "localityId": "tafi_viejo",
+      "provinceId": "tucuman",
+      "lat": -34.603722,
+      "lng": -58.381592
+    },
+    "rating": {
+      "value": 4.7,
+      "source": "Google Reviews"
+    },
+    "account": {
+      "loginEmail": "admin@cafeteria-la-esquina.com",
+      "passwordHash": "fakehashedpassword123",
+      "verified": true,
+      "status": "active",
+      "createdAt": "2025-01-10T10:20:30Z",
+      "updatedAt": "2025-01-15T14:05:22Z"
+    }
+  } 
+
+]
