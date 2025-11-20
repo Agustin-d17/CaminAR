@@ -108,8 +108,8 @@ export default function AdminEditBusiness() {
           <div>
             <Label>Nombre *</Label>
             <Input
-              value={formData.business_name}
-              onChange={(e) => handleUpdate("business_name", e.target.value)}
+              value={formData.name}
+              onChange={(e) => handleUpdate("name", e.target.value)}
               required
             />
           </div>

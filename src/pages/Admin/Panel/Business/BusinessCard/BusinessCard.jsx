@@ -24,12 +24,12 @@ export default function BusinessCard({ business, categories = [], localities = [
         <div className="flex items-start gap-4 flex-1 min-w-0">
           <img
             src={business.image || "/placeholder.svg"}
-            alt={business.business_name}
+            alt={business.name}
             className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
           />
 
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold mb-1 truncate">{business.business_name}</h3>
+            <h3 className="text-lg font-semibold mb-1 truncate">{business.name}</h3>
 
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary" className="text-slate-950">

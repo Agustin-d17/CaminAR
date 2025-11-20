@@ -53,7 +53,7 @@ export default function AdminBusinesses() {
     const t = searchTerm.toLowerCase()
 
     return (
-      b.business_name.toLowerCase().includes(t) ||
+      b.name.toLowerCase().includes(t) ||
       b.description.toLowerCase().includes(t)
     )
   })
