@@ -25,7 +25,7 @@ export default function BusinessForm() {
   const [localities, setLocalities] = useState([])
 
   const [formData, setFormData] = useState({
-    business_name: "",
+    name: "",
     description: "",
     full_description: "",
     category_id: "",
@@ -93,7 +93,7 @@ export default function BusinessForm() {
         <CardContent className="space-y-4">
           <div>
             <Label>Nombre *</Label>
-            <Input required value={formData.business_name} onChange={(e) => handleUpdate("business_name", e.target.value)} />
+            <Input required value={formData.name} onChange={(e) => handleUpdate("name", e.target.value)} />
           </div>
 
           <div className="grid grid-cols-2 gap-4">

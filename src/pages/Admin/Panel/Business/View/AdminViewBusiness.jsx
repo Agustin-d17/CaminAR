@@ -53,7 +53,7 @@ export default function AdminViewBusiness() {
   }
 
   const p = {
-    business_name: business.business_name,
+    name: business.name,
     description: business.description,
     full_description: business.full_description,
     image: business.image,
@@ -77,7 +77,7 @@ export default function AdminViewBusiness() {
           </Link>
 
           <div>
-            <h1 className="text-3xl font-bold">{p.business_name}</h1>
+            <h1 className="text-3xl font-bold">{p.name}</h1>
             <p className="text-slate-500 mt-1">{business.category_id}</p>
           </div>
         </div>
@@ -150,14 +150,14 @@ export default function AdminViewBusiness() {
                   <img
                     key={index}
                     src={img || "/placeholder.svg"}
-                    alt={`${p.business_name} ${index + 1}`}
+                    alt={`${p.name} ${index + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
                 ))
               ) : (
                 <img
                   src={p.image || "/placeholder.svg"}
-                  alt={p.business_name}
+                  alt={p.name}
                   className="w-full h-32 object-cover rounded-lg col-span-2"
                 />
               )}
