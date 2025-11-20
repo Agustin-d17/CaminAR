@@ -15,7 +15,6 @@ export default function PlacesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // ----------------Obtener categorías y lugares desde la base de datos----------------
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,8 +29,8 @@ export default function PlacesPage() {
         if (placesRes.error) throw placesRes.error
         if (categoriesRes.error) throw categoriesRes.error
 
-        setPlaces(placesRes.data || [])
-        setCategories(categoriesRes.data || [])
+        setPlaces(Array.isArray(placesRes.data) ? placesRes.data : [])
+        setCategories(Array.isArray(categoriesRes.data) ? categoriesRes.data : [])
       } catch (err) {
         console.error("Error al obtener datos:", err)
         setError("Error al obtener los datos.")
@@ -42,52 +41,51 @@ export default function PlacesPage() {
 
     fetchData()
   }, [])
-// ----------------Fin de la obtencion y llamado a la base de datos----------------
-  
-  // Filtrar por categoría seleccionada
+
   const filteredSpots = useMemo(() => {
     if (!category) return places
     return places.filter((spot) => spot.category_id === category)
   }, [category, places])
 
-  // Ordenar resultados
   const sortedSpots = useMemo(() => {
     const spots = [...filteredSpots]
+
     switch (sortOption) {
       case "alphabetical-asc":
-        return spots.sort((a, b) => a.name.localeCompare(b.name))
+        return spots.sort((a, b) => (a.name || "").localeCompare(b.name || ""))
       case "alphabetical-desc":
-        return spots.sort((a, b) => b.name.localeCompare(a.name))
+        return spots.sort((a, b) => (b.name || "").localeCompare(a.name || ""))
       case "rating-desc":
-        return spots.sort((a, b) => (b.rating?.value || 0) - (a.rating?.value || 0))
+        return spots.sort((a, b) => (b.rating_value || 0) - (a.rating_value || 0))
       case "rating-asc":
-        return spots.sort((a, b) => (a.rating?.value || 0) - (b.rating?.value || 0))
+        return spots.sort((a, b) => (a.rating_value || 0) - (b.rating_value || 0))
       default:
         return spots
     }
   }, [filteredSpots, sortOption])
 
-  // Obtener título dinámico
   const getTitle = () => {
     if (!category) return "Descubrí Tafí Viejo"
     const cat = categories.find((c) => c.id === category)
-    return cat ? cat.name : category
+    return cat?.name || category
   }
-  // Loading / Error States
+
   if (loading) return <p className="text-center mt-20 text-muted-foreground">Cargando lugares...</p>
   if (error) return <p className="text-center mt-20 text-red-500">{error}</p>
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation Header */}
+      {/* Navigation */}
       <nav className="flex items-center p-4 border-b border-border relative">
         <Link to="/">
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground cursor-pointer">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
         </Link>
         <div className="absolute left-1/2 transform -translate-x-1/2 text-primary">
-          <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
+          <span className="text-2xl font-bold text-blue-950">
+            Camin<span className="text-blue-400">AR</span>
+          </span>
         </div>
       </nav>
 
@@ -99,7 +97,7 @@ export default function PlacesPage() {
 
         <div className="flex justify-center items-center gap-4">
           <span className="text-lg text-muted-foreground">Ordenar por:</span>
-          <Select value={sortOption} onValueChange={(value) => setSortOption(value)}>
+          <Select value={sortOption} onValueChange={setSortOption}>
             <SelectTrigger className="w-64">
               <SelectValue />
             </SelectTrigger>
@@ -113,7 +111,7 @@ export default function PlacesPage() {
         </div>
       </header>
 
-      {/* Tourist Cards Grid */}
+      {/* Cards */}
       <main className="container mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {sortedSpots.map((spot) => (
@@ -123,7 +121,7 @@ export default function PlacesPage() {
               name={spot.name}
               description={spot.description}
               image={spot.image}
-              rating={spot.rating.value}
+              rating={spot.rating_value}
               category={categories.find(c => c.id === spot.category_id)?.name}
             />
           ))}
@@ -190,3 +188,5 @@ export default function PlacesPage() {
     </div>
   )
 }
+
+      

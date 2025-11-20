@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { supabase } from "@/lib/supabaseClient"
@@ -6,13 +5,11 @@ import ImageCarousel from "@/components/ImageCarousel/ImageCarousel"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Star, MapPin, Instagram, Facebook, X } from "lucide-react"
 
-
 export default function PlacePage() {
-  const { id } = useParams()  
+  const { id } = useParams()
   const [place, setPlace] = useState(null)
   const [loading, setLoading] = useState(true)
 
-// ----------------Llamdo a la base de datos para obtener un lugar especifico----------------
   useEffect(() => {
     const fetchPlace = async () => {
       try {
@@ -30,19 +27,16 @@ export default function PlacePage() {
         setLoading(false)
       }
     }
-    
+
     fetchPlace()
   }, [id])
-// ----------------Fin del llamado a la base de datos----------------
-  
+
   if (loading) return <div className="text-center mt-10 text-gray-400">Cargando...</div>
   if (!place) return <div className="text-center mt-10 text-gray-400">Lugar no encontrado</div>
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation Header */}
       <nav className="flex items-center p-4 border-b border-border relative">
-        {/* Link to places page */}
         <Button
           asChild
           variant="ghost"
@@ -54,38 +48,34 @@ export default function PlacePage() {
           </Link>
         </Button>
 
-        {/* Title */}
         <div className="absolute left-1/2 transform -translate-x-1/2 text-primary">
-          <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
+          <span className="text-2xl font-bold text-blue-950">
+            Camin<span className="text-blue-400">AR</span>
+          </span>
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Image Carousel */}
         <div className="mb-8">
           <ImageCarousel images={place.images} alt={place.name} />
         </div>
 
-        {/* Place Info */}
         <div className="space-y-6">
-          {/* Header */}
           <div className="flex items-center justify-between">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{place.name}</h1>
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-              <span className="font-semibold text-lg">{place.rating.value}</span>
+              <span className="font-semibold text-lg">{place.rating_value}</span>
             </div>
           </div>
 
-          {/* Full Description */}
           <div className="prose prose-gray max-w-none">
-            <p className="text-foreground/90 leading-relaxed">{place.full_description}</p>
+            <p className="text-foreground/90 leading-relaxed">
+              {place.full_description}
+            </p>
           </div>
 
-          {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4">
-            {/* Google Maps Button */}
             <Button asChild className="flex items-center gap-2 cursor-pointer">
               <a href={place.google_maps_link} target="_blank" rel="noopener noreferrer">
                 <MapPin className="h-4 w-4" />
@@ -93,18 +83,11 @@ export default function PlacePage() {
               </a>
             </Button>
 
-            {/* Social Links */}
             <div className="flex gap-3">
-              {/* Instagram Button */}
-              {place.socialLinks?.instagram && (
-                <Button
-                  variant="outline"
-                  size="default"
-                  asChild
-                  className="px-4 py-2 bg-transparent"
-                >
+              {place.social_links?.instagram && (
+                <Button variant="outline" size="default" asChild className="px-4 py-2 bg-transparent">
                   <a
-                    href={place.socialLinks.instagram}
+                    href={place.social_links.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
@@ -114,16 +97,11 @@ export default function PlacePage() {
                   </a>
                 </Button>
               )}
-              {/* Facebook Button */}
-              {place.socialLinks?.facebook && (
-                <Button
-                  variant="outline"
-                  size="default"
-                  asChild
-                  className="px-4 py-2 bg-transparent"
-                >
+
+              {place.social_links?.facebook && (
+                <Button variant="outline" size="default" asChild className="px-4 py-2 bg-transparent">
                   <a
-                    href={place.socialLinks.facebook}
+                    href={place.social_links.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
@@ -133,16 +111,11 @@ export default function PlacePage() {
                   </a>
                 </Button>
               )}
-              {/* Twitter Button */}
-              {place.socialLinks?.twitter && (
-                <Button
-                  variant="outline"
-                  size="default"
-                  asChild
-                  className="px-4 py-2 bg-transparent"
-                >
+
+              {place.social_links?.twitter && (
+                <Button variant="outline" size="default" asChild className="px-4 py-2 bg-transparent">
                   <a
-                    href={place.socialLinks.twitter}
+                    href={place.social_links.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"

@@ -9,8 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function AdminCreatePlaceForm() {
+export default function PlaceForm() {
   const navigate = useNavigate()
+
+  const ALLOWED_PLACE_CATEGORIES = [
+    "34e41b4a-a123-4fef-87c2-07f6a87d7b3b",
+    "c1b89d2c-1c60-4055-9f31-01f08e4db90f"
+  ]
 
   const [categories, setCategories] = useState([])
   const [subcategories, setSubcategories] = useState([])
@@ -28,25 +33,25 @@ export default function AdminCreatePlaceForm() {
     image: "",
     images: [],
     google_maps_link: "",
-    rating: {
-      value: 0,
-      source: "manual"
-    },
+    rating_value: 0,
+    rating_source: "manual",
     social_links: {
       instagram: "",
       facebook: "",
       twitter: "",
       website: "",
     },
-    location: {
-      address: "",
-      lat: 0,
-      lng: 0,
+    contact: {
+      phone: "",
+      email: ""
     },
+    address: "",
+    lat: 0,
+    lng: 0,
     place_id: ""
   })
 
-  // load selects
+
   useEffect(() => {
     loadOptions()
   }, [])
@@ -60,7 +65,11 @@ export default function AdminCreatePlaceForm() {
         supabase.from("localities").select("*"),
       ])
 
-    setCategories(cat || [])
+    const validCategories = (cat || []).filter(c =>
+      ALLOWED_PLACE_CATEGORIES.includes(c.id)
+    )
+
+    setCategories(validCategories)
     setSubcategories(sub || [])
     setProvinces(prov || [])
     setLocalities(loc || [])
@@ -75,33 +84,17 @@ export default function AdminCreatePlaceForm() {
     : []
 
   const handleSubmit = async (e) => {
-  e.preventDefault()
+    e.preventDefault()
 
-  // construir array de imágenes desde los 3 inputs
-  const galleryImages = [
-    formData.gallery1,
-    formData.gallery2,
-    formData.gallery3
-  ].filter((x) => x && x.trim() !== "")
+    const { error } = await supabase.from("places").insert(formData)
 
-  const payload = {
-    ...formData,
-    images: galleryImages
+    if (!error) navigate("/admin/panel/places")
+    else console.error(error)
   }
-
-  // limpiar claves sueltas
-  delete payload.gallery1
-  delete payload.gallery2
-  delete payload.gallery3
-
-  const { error } = await supabase.from("places").insert(payload)
-
-  if (!error) navigate("/admin/panel/places")
-  else console.error(error)
-}
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
+
       {/* INFO BASICA */}
       <Card>
         <CardHeader>
@@ -118,42 +111,48 @@ export default function AdminCreatePlaceForm() {
             />
           </div>
 
-          <div>
-            <Label>Categoría *</Label>
-            <Select
-              value={formData.category_id}
-              onValueChange={(v) => setFormData({ ...formData, category_id: v })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecciona una categoría" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((cat) => (
-                  <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <Label>Categoría *</Label>
+              <Select
+                value={formData.category_id}
+                onValueChange={(v) =>
+                  setFormData({ ...formData, category_id: v, subcategory_id: "" })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label>Subcategoría *</Label>
+              <Select
+                value={formData.subcategory_id}
+                onValueChange={(v) =>
+                  setFormData({ ...formData, subcategory_id: v })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una subcategoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  {filteredSubcategories.map((sub) => (
+                    <SelectItem key={sub.id} value={sub.id}>{sub.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div>
-            <Label>Subcategoría *</Label>
-            <Select
-              value={formData.subcategory_id}
-              onValueChange={(v) => setFormData({ ...formData, subcategory_id: v })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecciona una subcategoría" />
-              </SelectTrigger>
-              <SelectContent>
-                {filteredSubcategories.map((sub) => (
-                  <SelectItem key={sub.id} value={sub.id}>{sub.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label>Descripción Corta *</Label>
+            <Label>Descripción *</Label>
             <Textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -165,9 +164,12 @@ export default function AdminCreatePlaceForm() {
             <Label>Descripción Completa</Label>
             <Textarea
               value={formData.full_description}
-              onChange={(e) => setFormData({ ...formData, full_description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, full_description: e.target.value })
+              }
             />
           </div>
+
         </CardContent>
       </Card>
 
@@ -215,12 +217,9 @@ export default function AdminCreatePlaceForm() {
           <div>
             <Label>Dirección</Label>
             <Input
-              value={formData.location.address}
+              value={formData.address}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  location: { ...formData.location, address: e.target.value }
-                })
+                setFormData({ ...formData, address: e.target.value })
               }
             />
           </div>
@@ -230,12 +229,9 @@ export default function AdminCreatePlaceForm() {
               <Label>Latitud</Label>
               <Input
                 type="number"
-                value={formData.location.lat}
+                value={formData.lat}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    location: { ...formData.location, lat: Number(e.target.value) }
-                  })
+                  setFormData({ ...formData, lat: Number(e.target.value) })
                 }
               />
             </div>
@@ -243,12 +239,9 @@ export default function AdminCreatePlaceForm() {
               <Label>Longitud</Label>
               <Input
                 type="number"
-                value={formData.location.lng}
+                value={formData.lng}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    location: { ...formData.location, lng: Number(e.target.value) }
-                  })
+                  setFormData({ ...formData, lng: Number(e.target.value) })
                 }
               />
             </div>
@@ -258,7 +251,9 @@ export default function AdminCreatePlaceForm() {
             <Label>Google Maps URL</Label>
             <Input
               value={formData.google_maps_link}
-              onChange={(e) => setFormData({ ...formData, google_maps_link: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, google_maps_link: e.target.value })
+              }
             />
           </div>
 
@@ -270,48 +265,33 @@ export default function AdminCreatePlaceForm() {
         <CardHeader>
           <CardTitle>Imágenes</CardTitle>
         </CardHeader>
-
         <CardContent className="space-y-6">
 
-          {/* Imagen principal */}
           <div className="space-y-2">
             <Label>Imagen Principal *</Label>
             <Input
               placeholder="https://..."
               value={formData.image}
-              onChange={(e) =>
-                setFormData({ ...formData, image: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
               required
             />
           </div>
 
-          {/* Galería: 3 imágenes fijas */}
           <div className="space-y-4">
             <Label>Galería (3 imágenes)</Label>
-
             <div className="space-y-3">
-              <Input
-                placeholder="URL Imagen 1"
-                value={formData.gallery1 || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, gallery1: e.target.value })
-                }
-              />
-              <Input
-                placeholder="URL Imagen 2"
-                value={formData.gallery2 || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, gallery2: e.target.value })
-                }
-              />
-              <Input
-                placeholder="URL Imagen 3"
-                value={formData.gallery3 || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, gallery3: e.target.value })
-                }
-              />
+              {Array.from({ length: 3 }).map((_, index) => (
+                <Input
+                  key={index}
+                  placeholder={`URL Imagen ${index + 1}`}
+                  value={formData.images?.[index] || ""}
+                  onChange={(e) => {
+                    const updated = [...formData.images]
+                    updated[index] = e.target.value
+                    setFormData({ ...formData, images: updated })
+                  }}
+                />
+              ))}
             </div>
           </div>
 
@@ -325,64 +305,60 @@ export default function AdminCreatePlaceForm() {
         </CardHeader>
         <CardContent className="space-y-4">
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <Label>Instagram</Label>
+          {["instagram", "facebook", "twitter", "website"].map((field) => (
+            <div key={field}>
+              <Label>{field}</Label>
               <Input
-                value={formData.social_links.instagram}
+                value={formData.social_links[field]}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    social_links: { ...formData.social_links, instagram: e.target.value }
+                    social_links: { ...formData.social_links, [field]: e.target.value }
                   })
                 }
               />
             </div>
+          ))}
 
-            <div>
-              <Label>Facebook</Label>
-              <Input
-                value={formData.social_links.facebook}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    social_links: { ...formData.social_links, facebook: e.target.value }
-                  })
-                }
-              />
-            </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Información de contacto</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+
+          <div>
+            <Label>Teléfono</Label>
+            <Input
+              value={formData.contact.phone}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  contact: { ...formData.contact, phone: e.target.value }
+                })
+              }
+            />
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <Label>Twitter</Label>
-              <Input
-                value={formData.social_links.twitter}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    social_links: { ...formData.social_links, twitter: e.target.value }
-                  })
-                }
-              />
-            </div>
-
-            <div>
-              <Label>Sitio Web</Label>
-              <Input
-                value={formData.social_links.website}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    social_links: { ...formData.social_links, website: e.target.value }
-                  })
-                }
-              />
-            </div>
+          <div>
+            <Label>Email</Label>
+            <Input
+              type="email"
+              value={formData.contact.email}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  contact: { ...formData.contact, email: e.target.value }
+                })
+              }
+            />
           </div>
 
         </CardContent>
       </Card>
+
 
       <Button type="submit" className="w-full">Crear Lugar</Button>
     </form>

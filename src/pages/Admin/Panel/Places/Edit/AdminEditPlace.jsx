@@ -31,7 +31,8 @@ export default function AdminEditPlace() {
     subcategory_id: "",
     image: "",
     images: [],
-    rating: { value: 0, source: "" },
+    rating_value: 0,
+    rating_source: "manual",
     google_maps_link: "",
     social_links: {
       instagram: "",
@@ -41,15 +42,12 @@ export default function AdminEditPlace() {
     },
     province_id: "",
     locality_id: "",
-    location: {
-      address: "",
-      lat: 0,
-      lng: 0,
-    },
-    place_id: "",
+    address: "",
+    lat: 0,
+    lng: 0,
+    place_id: ""
   })
 
-  // Fetch inicial
   useEffect(() => {
     loadInitialData()
   }, [])
@@ -67,6 +65,7 @@ export default function AdminEditPlace() {
       ])
 
     if (place) setFormData(place)
+
     setCategories(cat || [])
     setSubcategories(sub || [])
     setProvinces(prov || [])
@@ -101,21 +100,17 @@ export default function AdminEditPlace() {
 
   if (loading) return <p className="text-center py-10">Cargando...</p>
 
-  // filtramos localidades por provincia
   const filteredLocalities = formData.province_id
     ? localities.filter(l => l.province_id === formData.province_id)
     : []
 
-  // filtramos subcategorias por categoria
   const filteredSubcategories = subcategories.filter(
     s => s.category_id === formData.category_id
   )
-  
 
   return (
     <div className="space-y-6">
 
-      {/* Header */}
       <div className="flex items-center gap-4">
         <Link to={`/admin/panel/places/${id}`}>
           <Button variant="outline" size="icon">
@@ -130,94 +125,66 @@ export default function AdminEditPlace() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        
-        {/* Información Básica */}
+
+        {/* Información básica */}
         <Card>
           <CardHeader>
             <CardTitle>Información Básica</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
 
-            <div className="space-y-2">
-              <Label>Nombre</Label>
-              <Input
-                value={formData.name}
-                onChange={e => handleChange("name", e.target.value)}
-              />
-            </div>
+            <Label>Nombre</Label>
+            <Input
+              value={formData.name}
+              onChange={e => handleChange("name", e.target.value)}
+            />
 
-            <div className="space-y-2">
-              <Label>Descripción Corta</Label>
-              <Textarea
-                value={formData.description}
-                onChange={e => handleChange("description", e.target.value)}
-                rows={3}
-              />
-            </div>
+            <Label>Descripción</Label>
+            <Textarea
+              value={formData.description}
+              onChange={e => handleChange("description", e.target.value)}
+            />
 
-            <div className="space-y-2">
-              <Label>Descripción Completa</Label>
-              <Textarea
-                value={formData.full_description}
-                onChange={e => handleChange("full_description", e.target.value)}
-                rows={6}
-              />
-            </div>
+            <Label>Descripción completa</Label>
+            <Textarea
+              value={formData.full_description}
+              onChange={e => handleChange("full_description", e.target.value)}
+            />
 
-            {/* Categoría */}
-            <div className="space-y-2">
-              <Label>Categoría</Label>
-              <Select
-                value={formData.category_id}
-                onValueChange={value => handleChange("category_id", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una categoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map(cat => (
-                    <SelectItem key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label>Categoría</Label>
+            <Select
+              value={formData.category_id}
+              onValueChange={v => handleChange("category_id", v)}
+            >
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {categories.map(c => (
+                  <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            {/* Subcategoría */}
-            <div className="space-y-2">
-              <Label>Subcategoría</Label>
-              <Select
-                value={formData.subcategory_id}
-                onValueChange={value => handleChange("subcategory_id", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una subcategoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  {filteredSubcategories.length > 0 ? (
-                    filteredSubcategories.map(sub => (
-                      <SelectItem key={sub.id} value={sub.id}>
-                        {sub.name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <p className="px-4 py-2 text-sm text-slate-500">No hay subcategorías</p>
-                  )}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label>Subcategoría</Label>
+            <Select
+              value={formData.subcategory_id}
+              onValueChange={v => handleChange("subcategory_id", v)}
+            >
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {filteredSubcategories.map(s => (
+                  <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            {/* Rating */}
-            <div className="space-y-2">
-              <Label>Rating</Label>
-              <Input
-                type="number"
-                step="0.1"
-                value={formData.rating?.value || ""}
-                onChange={e => handleNestedChange("rating", "value", Number(e.target.value))}
-              />
-            </div>
+            <Label>Rating</Label>
+            <Input
+              type="number"
+              step="0.1"
+              value={formData.rating_value}
+              onChange={e => handleChange("rating_value", Number(e.target.value))}
+            />
+
           </CardContent>
         </Card>
 
@@ -228,102 +195,84 @@ export default function AdminEditPlace() {
           </CardHeader>
           <CardContent className="space-y-4">
 
-            {/* Provincia */}
-            <div className="space-y-2">
-              <Label>Provincia</Label>
-              <Select
-                value={formData.province_id}
-                onValueChange={value => handleChange("province_id", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una provincia" />
-                </SelectTrigger>
-                <SelectContent>
-                  {provinces.map(p => (
-                    <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label>Provincia</Label>
+            <Select
+              value={formData.province_id}
+              onValueChange={v => handleChange("province_id", v)}
+            >
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {provinces.map(p => (
+                  <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            {/* Localidad */}
-            <div className="space-y-2">
-              <Label>Localidad</Label>
-              <Select
-                value={formData.locality_id}
-                onValueChange={value => handleChange("locality_id", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una localidad" />
-                </SelectTrigger>
-                <SelectContent>
-                  {filteredLocalities.map(l => (
-                    <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Label>Localidad</Label>
+            <Select
+              value={formData.locality_id}
+              onValueChange={v => handleChange("locality_id", v)}
+            >
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {filteredLocalities.map(l => (
+                  <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-            {/* Dirección */}
-            <div className="space-y-2">
-              <Label>Dirección</Label>
-              <Input
-                value={formData.location.address}
-                onChange={e => handleNestedChange("location", "address", e.target.value)}
-              />
-            </div>
+            <Label>Dirección</Label>
+            <Input
+              value={formData.address}
+              onChange={e => handleChange("address", e.target.value)}
+            />
 
-            {/* Coordenadas */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label>Latitud</Label>
                 <Input
                   type="number"
-                  value={formData.location.lat}
-                  onChange={e => handleNestedChange("location", "lat", Number(e.target.value))}
+                  value={formData.lat}
+                  onChange={e => handleChange("lat", Number(e.target.value))}
                 />
               </div>
               <div>
                 <Label>Longitud</Label>
                 <Input
                   type="number"
-                  value={formData.location.lng}
-                  onChange={e => handleNestedChange("location", "lng", Number(e.target.value))}
+                  value={formData.lng}
+                  onChange={e => handleChange("lng", Number(e.target.value))}
                 />
               </div>
             </div>
+
           </CardContent>
         </Card>
 
-        {/* Enlaces */}
+        {/* Enlaces sociales */}
         <Card>
           <CardHeader>
             <CardTitle>Enlaces</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
 
-            <div className="space-y-2">
-              <Label>Google Maps</Label>
-              <Input
-                value={formData.google_maps_link}
-                onChange={e => handleChange("google_maps_link", e.target.value)}
-              />
-            </div>
+            <Label>Google Maps</Label>
+            <Input
+              value={formData.google_maps_link}
+              onChange={e => handleChange("google_maps_link", e.target.value)}
+            />
 
-            <div className="space-y-2">
-              <Label>Google Place ID</Label>
-              <Input
-                value={formData.place_id}
-                onChange={e => handleChange("place_id", e.target.value)}
-              />
-            </div>
+            <Label>Google Place ID</Label>
+            <Input
+              value={formData.place_id}
+              onChange={e => handleChange("place_id", e.target.value)}
+            />
 
-            {/* Redes */}
             {["instagram", "facebook", "twitter", "website"].map(field => (
-              <div className="space-y-2" key={field}>
+              <div key={field}>
                 <Label>{field}</Label>
                 <Input
-                  value={formData.social_links[field] || ""}
+                  value={formData.social_links?.[field] || ""}
                   onChange={e => handleNestedChange("social_links", field, e.target.value)}
                 />
               </div>
@@ -332,9 +281,8 @@ export default function AdminEditPlace() {
           </CardContent>
         </Card>
 
-        {/* BOTONES */}
         <div className="flex gap-4">
-          <Link to="/admin/panel/places">
+          <Link to={`/admin/panel/places/${id}`}>
             <Button variant="outline">Cancelar</Button>
           </Link>
 

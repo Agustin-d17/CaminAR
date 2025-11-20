@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { supabase } from "@/lib/supabaseClient"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -21,7 +22,6 @@ import {
   MoreVertical
 } from "lucide-react"
 
-
 export default function AdminViewPlace() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -30,30 +30,26 @@ export default function AdminViewPlace() {
   const [categories, setCategories] = useState([])
   const [localities, setLocalities] = useState([])
   const [provinces, setProvinces] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  // ---------------------------
-  // 1. Obtener datos de Supabase
-  // ---------------------------
   useEffect(() => {
     async function fetchEverything() {
-      // Lugar
+      setLoading(true)
+
       const { data: placeData } = await supabase
         .from("places")
         .select("*")
         .eq("id", id)
         .single()
 
-      // Categorías
       const { data: categoriesData } = await supabase
         .from("categories")
         .select("*")
 
-      // Localidades
       const { data: localitiesData } = await supabase
         .from("localities")
         .select("*")
 
-      // Provincias
       const { data: provincesData } = await supabase
         .from("provinces")
         .select("*")
@@ -62,45 +58,42 @@ export default function AdminViewPlace() {
       setCategories(categoriesData || [])
       setLocalities(localitiesData || [])
       setProvinces(provincesData || [])
+      setLoading(false)
     }
 
     fetchEverything()
   }, [id])
 
-  // -----------------------------
-  // 2. Si no existe el lugar
-  // -----------------------------
-  if (!place) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <p className="text-slate-400">
-          Ups! Lugar no encontrado con el ID proporcionado
-        </p>
+        <p className="text-slate-400">Cargando...</p>
       </div>
     )
   }
 
-  // -----------------------------
-  // 3. Resolver nombres reales
-  // -----------------------------
+  if (!place) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <p className="text-slate-400">Ups! Lugar no encontrado</p>
+      </div>
+    )
+  }
+
+  // Resolver nombres
   const categoryName =
-    categories.find((c) => c.id === place.category_id)?.name ||
-    "Sin categoría"
+    categories.find((c) => c.id === place.category_id)?.name || "Sin categoría"
 
   const localityName =
-    localities.find((l) => l.id === place.locality_id)?.name ||
-    "Sin localidad"
+    localities.find((l) => l.id === place.locality_id)?.name || "Sin localidad"
 
   const provinceName =
-    provinces.find((p) => p.id === place.province_id)?.name ||
-    "Sin provincia"
+    provinces.find((p) => p.id === place.province_id)?.name || "Sin provincia"
 
-  // -----------------------------
-  // 4. Render
-  // -----------------------------
   return (
     <div className="space-y-6">
-      {/* Header */}
+
+      {/* HEADER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to="/admin/panel/places">
@@ -119,7 +112,7 @@ export default function AdminViewPlace() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon"  className="cursor-pointer">
+            <Button variant="outline" size="icon" className="cursor-pointer">
               <MoreVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -140,8 +133,9 @@ export default function AdminViewPlace() {
         </DropdownMenu>
       </div>
 
-      {/* Info */}
+      {/* INFO GENERAL */}
       <div className="grid gap-6 md:grid-cols-2">
+
         <Card>
           <CardHeader>
             <CardTitle>Información General</CardTitle>
@@ -162,13 +156,13 @@ export default function AdminViewPlace() {
 
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-              <span className="font-semibold">{place.rating.value}</span>
+              <span className="font-semibold">{place.rating_value}</span>
               <span className="text-slate-500">/ 5.0</span>
             </div>
           </CardContent>
         </Card>
 
-        {/* Images */}
+        {/* IMÁGENES */}
         <Card>
           <CardHeader>
             <CardTitle>Imágenes</CardTitle>
@@ -188,12 +182,13 @@ export default function AdminViewPlace() {
         </Card>
       </div>
 
-      {/* Links */}
+      {/* ENLACES */}
       <Card>
         <CardHeader>
           <CardTitle>Enlaces y Ubicación</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+
           {place.google_maps_link && (
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-slate-500" />
@@ -229,8 +224,10 @@ export default function AdminViewPlace() {
               )}
             </div>
           </div>
+
         </CardContent>
       </Card>
+
     </div>
   )
 }

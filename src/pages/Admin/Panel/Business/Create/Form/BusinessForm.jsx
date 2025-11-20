@@ -1,275 +1,166 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+// BusinessForm.jsx - versión final normalizada
+
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { supabase } from "@/lib/supabaseClient"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import categories from "@/data/categories.json"
-import provinces from "@/data/provinces.json"
-import localities from "@/data/localities.json"
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card"
 
 export default function BusinessForm() {
   const navigate = useNavigate()
-  const subCategories = categories.find(cat => cat.categoryId === "negocios").subCategories
-  const [businessData, setBusinessData] = useState({
-    name: "",
-    category: "",
-    subcategory: "",
+  
+  const ALLOWED_BUSINESS_CATEGORIES = [
+    "59eea947-2da4-4611-b753-1db0b4b1fbe4", // Restaurantes y Cafeterías
+    "5d2aa5bc-edc8-49b4-8214-a7b95a6c3d14"  // Negocios
+  ]
+
+  const [categories, setCategories] = useState([])
+  const [subcategories, setSubcategories] = useState([])
+  const [provinces, setProvinces] = useState([])
+  const [localities, setLocalities] = useState([])
+
+  const [formData, setFormData] = useState({
+    business_name: "",
     description: "",
+    full_description: "",
+    category_id: "",
+    subcategory_id: "",
+    province_id: "",
+    locality_id: "",
     address: "",
-    locality: "",
-    province: "",
-    phone: "",
-    email: "",
-    website: "",
-    hours: "",
-    googleMapsLink: "",
-    facebook: "",
-    instagram: "",
+    lat: 0,
+    lng: 0,
+    image: "",
+    images: ["", "", ""],
+    google_maps_link: "",
+    social_links: {},
+    rating_value: 0,
+    rating_source: "manual",
+    place_id: null,
+    status: "pending"
   })
 
-  const handleBusinessSubmit = (e) => {
-    e.preventDefault()
-    console.log("Business data:", businessData)
-    navigate("/admin/panel/business")
+  useEffect(() => {
+    async function loadOptions() {
+      const [{ data: cat }, { data: sub }, { data: prov }, { data: loc }] = await Promise.all([
+        supabase.from("categories").select("*"),
+        supabase.from("subcategories").select("*"),
+        supabase.from("provinces").select("*"),
+        supabase.from("localities").select("*")
+      ])
+
+      setCategories((cat || []).filter(c => ALLOWED_BUSINESS_CATEGORIES.includes(c.id)))
+      setSubcategories(sub || [])
+      setProvinces(prov || [])
+      setLocalities(loc || [])
+    }
+    loadOptions()
+  }, [])
+
+  const handleUpdate = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-    return (
-        <form onSubmit={handleBusinessSubmit} className="max-w-4xl space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Información Básica</CardTitle>
-              <CardDescription className="text-slate-500">Datos principales del negocio</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-slate-500">
-                  Nombre del Negocio *
-                </Label>
-                <Input
-                  id="name"
-                  required
-                  value={businessData.name}
-                  onChange={(e) => setBusinessData({ ...businessData, name: e.target.value })}
-                />
-              </div>
+  const handleSocialUpdate = (key, value) => {
+    setFormData(prev => ({
+      ...prev,
+      social_links: { ...prev.social_links, [key]: value }
+    }))
+  }
 
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="category" className="text-slate-500">
-                    Categoría *
-                  </Label>
-                  <Select
-                    value={businessData.category || ""}
-                    onValueChange={(value) => setBusinessData({ ...businessData, category: value, subcategory: "" })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona una categoría" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="restaurante">Restaurantes y Cafeterías</SelectItem>
-                      <SelectItem value="otros">Otros...</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const { error } = await supabase.from("businesses").insert(formData)
 
-                {businessData.category === "otros" && (
-                  <div className="space-y-2">
-                    <Label htmlFor="subcategory" className="text-slate-500">
-                      Subcategoría *
-                    </Label>
-                    <Select
-                      value={businessData.subcategory || ""}
-                      onValueChange={(value) => setBusinessData({ ...businessData, subcategory: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona una subcategoría" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {subCategories.map((subCat) => (
-                          <SelectItem key={subCat.subCategoryId} value={subCat.subCategoryId}>
-                            {subCat.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-              </div>
+    if (!error) navigate("/admin/panel/business")
+    else alert("Error: " + error.message)
+  }
 
-              <div className="space-y-2">
-                <Label htmlFor="description" className="text-slate-500">
-                  Descripción *
-                </Label>
-                <Textarea
-                  id="description"
-                  required
-                  value={businessData.description}
-                  onChange={(e) => setBusinessData({ ...businessData, description: e.target.value })}
-                  className="min-h-[100px]"
-                />
-              </div>
-            </CardContent>
-          </Card>
+  const filteredSubcategories = subcategories.filter(s => s.category_id === formData.category_id)
+  const filteredLocalities = localities.filter(l => l.province_id === formData.province_id)
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-white">Información de Contacto</CardTitle>
-              <CardDescription className="text-slate-400">Datos de ubicación y contacto</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-slate-500">
-                  Dirección Completa *
-                </Label>
-                <Input
-                  id="address"
-                  required
-                  value={businessData.address}
-                  onChange={(e) => setBusinessData({ ...businessData, address: e.target.value })}
-                />
-              </div>
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="provincia" className="text-slate-500">Provincia *</Label>
-                    <Select value={businessData.province || ""} onValueChange={(value) => setBusinessData({...businessData, province: value})}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Selecciona tu provincia" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {provinces.map((province) => (
-                                <SelectItem key={province.provinceId} value={province.name.toLowerCase()}>
-                                    {province.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-              
-                <div className="space-y-2">
-                    <Label htmlFor="localidad" className="text-slate-500">Localidad *</Label>
-                    <Select value={businessData.locality || ""} onValueChange={(value) => setBusinessData({...businessData, locality: value})}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Selecciona tu localidad" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {localities.map((locality) => (
-                                <SelectItem key={locality.localityId} value={locality.name.toLowerCase()}>
-                                    {locality.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-slate-500">
-                    Teléfono *
-                  </Label>
-                  <Input
-                    id="phone"
-                    required
-                    value={businessData.phone}
-                    onChange={(e) => setBusinessData({ ...businessData, phone: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-slate-500">
-                    Email de Contacto *
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    required
-                    value={businessData.email}
-                    onChange={(e) => setBusinessData({ ...businessData, email: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="website" className="text-slate-500">
-                    Sitio Web
-                  </Label>
-                  <Input
-                    id="website"
-                    value={businessData.website}
-                    onChange={(e) => setBusinessData({ ...businessData, website: e.target.value })}
-                    placeholder="https://ejemplo.com"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="hours" className="text-slate-300">
-                    Horarios de Atención *
-                  </Label>
-                  <Input
-                    id="hours"
-                    required
-                    value={businessData.hours}
-                    onChange={(e) => setBusinessData({ ...businessData, hours: e.target.value })}
-                    placeholder="Lun-Vie 9:00-18:00"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="googleMapsLink" className="text-slate-500">
-                  Link de Google Maps
-                </Label>
-                <Input
-                  id="googleMapsLink"
-                  value={businessData.googleMapsLink}
-                  onChange={(e) => setBusinessData({ ...businessData, googleMapsLink: e.target.value })}
-                  placeholder="https://maps.google.com/?q=..."
-                />
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="facebook" className="text-slate-500">
-                    Facebook
-                  </Label>
-                  <Input
-                    id="facebook"
-                    value={businessData.facebook}
-                    onChange={(e) => setBusinessData({ ...businessData, facebook: e.target.value })}
-                    placeholder="https://facebook.com/..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="instagram" className="text-slate-500">
-                    Instagram
-                  </Label>
-                  <Input
-                    id="instagram"
-                    value={businessData.instagram}
-                    onChange={(e) => setBusinessData({ ...businessData, instagram: e.target.value })}
-                    placeholder="https://instagram.com/..."
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex gap-4">
-            <Link to="/admin/panel/business">
-                <Button type="button" variant="outline" className="cursor-pointer">
-                    Cancelar
-                </Button>
-            </Link>
-            <Button type="submit" className="cursor-pointer">
-              Crear Negocio
-            </Button>
+      {/* Información básica */}
+      <Card>
+        <CardHeader><CardTitle>Información Básica</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label>Nombre *</Label>
+            <Input required value={formData.business_name} onChange={(e) => handleUpdate("business_name", e.target.value)} />
           </div>
-        </form>
-    )
+
+          <div className="grid grid-cols-2 gap-4">
+            <Select value={formData.category_id} onValueChange={v => handleUpdate("category_id", v)}>
+              <SelectTrigger><SelectValue placeholder="Categoría" /></SelectTrigger>
+              <SelectContent>{categories.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
+            </Select>
+            
+            <Select value={formData.subcategory_id} onValueChange={v => handleUpdate("subcategory_id", v)}>
+              <SelectTrigger><SelectValue placeholder="Subcategoría" /></SelectTrigger>
+              <SelectContent>
+                {filteredSubcategories.length ? filteredSubcategories.map(sub => <SelectItem key={sub.id} value={sub.id}>{sub.name}</SelectItem>) : <SelectItem disabled>No hay subcategorías</SelectItem>}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Textarea required value={formData.description} onChange={e => handleUpdate("description", e.target.value)} />
+          <Textarea value={formData.full_description} onChange={e => handleUpdate("full_description", e.target.value)} />
+        </CardContent>
+      </Card>
+
+      {/* Ubicación */}
+      <Card>
+        <CardHeader><CardTitle>Ubicación</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <Select value={formData.province_id} onValueChange={v => handleUpdate("province_id", v)}>
+            <SelectTrigger><SelectValue placeholder="Provincia" /></SelectTrigger>
+            <SelectContent>{provinces.map(p => <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>)}</SelectContent>
+          </Select>
+
+          <Select value={formData.locality_id} onValueChange={v => handleUpdate("locality_id", v)}>
+            <SelectTrigger><SelectValue placeholder="Localidad" /></SelectTrigger>
+            <SelectContent>{filteredLocalities.map(l => <SelectItem key={l.id} value={l.id}>{l.name}</SelectItem>)}</SelectContent>
+          </Select>
+
+          <Input required value={formData.address} onChange={e => handleUpdate("address", e.target.value)} />
+        </CardContent>
+      </Card>
+
+      {/* Imágenes */}
+      <Card>
+        <CardHeader><CardTitle>Imágenes</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          <Input required placeholder="Imagen principal" value={formData.image} onChange={e => handleUpdate("image", e.target.value)} />
+          {formData.images.map((img, idx) => (
+            <Input key={idx} value={img} placeholder={`Galería ${idx+1}`} onChange={e => {
+              const arr = [...formData.images]
+              arr[idx] = e.target.value
+              handleUpdate("images", arr)
+            }} />
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Redes */}
+      <Card>
+        <CardHeader><CardTitle>Redes</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          {["facebook", "instagram", "twitter", "website"].map(r => (
+            <Input key={r} placeholder={r} onChange={e => handleSocialUpdate(r, e.target.value)} />
+          ))}
+          <Input placeholder="Google Maps URL" value={formData.google_maps_link} onChange={e => handleUpdate("google_maps_link", e.target.value)} />
+        </CardContent>
+      </Card>
+
+      <Button type="submit" className="w-full">Crear Negocio</Button>
+
+    </form>
+  )
 }
