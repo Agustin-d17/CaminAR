@@ -1,4 +1,7 @@
 import React from "react"
+import { adminLogout } from "@/lib/adminAuth"
+import { useAdmin } from "@/context/AdminContext"
+
 import { ChevronRight, LogOut, Settings, User, ChartColumn, LayoutDashboard, MapPin, Building2 } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
@@ -40,10 +43,7 @@ const navigationItems = [
 
 export function AdminAppSidebar({ ...props }) {
   const navigate = useNavigate()
-  const handleLogout = () => {
-    localStorage.removeItem("currentAdmin")
-    navigate("/")
-  }
+  const { admin } = useAdmin()
 
   return (
     <Sidebar {...props}>
@@ -56,6 +56,16 @@ export function AdminAppSidebar({ ...props }) {
             <span className="text-2xl font-bold text-blue-950">Camin<span className="text-blue-400">AR</span></span>
           </div>
         </div>
+
+        {/* Admin info */}
+        {admin && (
+          <div className="px-4 pb-3 pt-1 text-xs text-muted-foreground">
+            <p className="font-semibold text-foreground">{admin.name}</p>
+            <p className="uppercase tracking-wide text-[10px] opacity-70">
+              {admin.role}
+            </p>
+          </div>
+        )}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -101,7 +111,7 @@ export function AdminAppSidebar({ ...props }) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <Button variant="outline" className="inline-flex items-center space-x-2 cursor-pointer hover:text-red-600" onClick={handleLogout}>
+        <Button variant="outline" className="inline-flex items-center space-x-2 cursor-pointer hover:text-red-600" onClick={adminLogout}>
           <LogOut className="h-4 w-4" />
           <span>Cerrar Sesión</span>
         </Button>

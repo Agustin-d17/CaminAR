@@ -6,18 +6,19 @@ import Places from "./pages/Places/Places"
 import PlacePage from "./pages/Place/PlacePage"
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 // Bussiness Auth
-import BusinessRegister from "./pages/Business/Register/BusinessRegister"
-import BusinessLogin from './pages/Business/Login/BusinessLogin'
+// import BusinessRegister from "./pages/Business/Register/BusinessRegister"
+// import BusinessLogin from './pages/Business/Login/BusinessLogin'
 // Bussiness Dashboard
-import DashboardLayout from './pages/Business/Dashboard/DashboardLayout'
-import DashboardRedirect from './pages/Business/Dashboard/DashboardRedirect'
-import DashboardProfile from './pages/Business/Dashboard/Perfil/DashboardProfile'
-import EditProfile from './pages/Business/Dashboard/Perfil/Edit/EditProfile'
-import DashboardAnalytics from './pages/Business/Dashboard/Analytics/DashboardAnalytics'
-import DashboardSettings from './pages/Business/Dashboard/Settings/DashboardSettings'
+// import DashboardLayout from './pages/Business/Dashboard/DashboardLayout'
+// import DashboardRedirect from './pages/Business/Dashboard/DashboardRedirect'
+// import DashboardProfile from './pages/Business/Dashboard/Perfil/DashboardProfile'
+// import EditProfile from './pages/Business/Dashboard/Perfil/Edit/EditProfile'
+// import DashboardAnalytics from './pages/Business/Dashboard/Analytics/DashboardAnalytics'
+// import DashboardSettings from './pages/Business/Dashboard/Settings/DashboardSettings'
 // Admin Auth
 import AdminLogin from './pages/Admin/Login/AdminLogin'
 import RequireAdminAuth from './Routes/admin/RequireAdminAuth'
+import { AdminProvider } from './context/AdminContext'
 // Admin Panel
 import PanelLayout from './pages/Admin/Panel/PanelLayout'
 import AdminPanelRedirect from './pages/Admin/Panel/AdminPanelRedirect'
@@ -43,23 +44,23 @@ function App() {
           <Route path="/place/:id" element={<PlacePage />} />
           
           {/*Business Auth */}
-          <Route path="/business/register" element={<BusinessRegister />} />
-   <       Route path="/business/login" element={<BusinessLogin />}/>
+          {/* <Route path="/business/register" element={<BusinessRegister />} /> */}
+   {/* <       Route path="/business/login" element={<BusinessLogin />}/> */}
           
           {/* Dashboard Business*/}
-          <Route path="/business/dashboard/*" element={<DashboardLayout />}>
+          {/* <Route path="/business/dashboard/*" element={<DashboardLayout />}>
             <Route index element={<DashboardRedirect />} />
             <Route path="profile" element={<DashboardProfile />} />
             <Route path="profile/edit" element={<EditProfile />} />
             <Route path="analytics" element={<DashboardAnalytics />} />
             <Route path="settings" element={<DashboardSettings />} />
-          </Route>
+          </Route> */}
 
           {/* Admin Auth */}
           <Route path="/admin/login" element={<AdminLogin />}/>
 
           {/* Admin Panel*/}
-          <Route path="/admin/panel/*" element={<RequireAdminAuth><PanelLayout /></RequireAdminAuth>}>
+          <Route path="/admin/panel/*" element={<RequireAdminAuth><AdminProvider><PanelLayout /></AdminProvider></RequireAdminAuth>}>
             <Route index element={<AdminPanelRedirect />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             {/* Admin Places */}

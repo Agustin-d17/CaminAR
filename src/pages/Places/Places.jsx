@@ -10,26 +10,33 @@ export default function PlacesPage() {
   const [searchParams] = useSearchParams()
   const category = searchParams.get("category")
   const [sortOption, setSortOption] = useState("alphabetical-asc")
+
   const [places, setPlaces] = useState([])
+  const [businesses, setBusinesses] = useState([])
   const [categories, setCategories] = useState([])
+
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // ---------- FETCH ----------
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true)
         setError(null)
 
-        const [placesRes, categoriesRes] = await Promise.all([
+        const [placesRes, businessesRes, categoriesRes] = await Promise.all([
           supabase.from("places").select("*"),
+          supabase.from("businesses").select("*"),
           supabase.from("categories").select("*")
         ])
 
         if (placesRes.error) throw placesRes.error
+        if (businessesRes.error) throw businessesRes.error
         if (categoriesRes.error) throw categoriesRes.error
 
         setPlaces(Array.isArray(placesRes.data) ? placesRes.data : [])
+        setBusinesses(Array.isArray(businessesRes.data) ? businessesRes.data : [])
         setCategories(Array.isArray(categoriesRes.data) ? categoriesRes.data : [])
       } catch (err) {
         console.error("Error al obtener datos:", err)
@@ -42,13 +49,20 @@ export default function PlacesPage() {
     fetchData()
   }, [])
 
-  const filteredSpots = useMemo(() => {
-    if (!category) return places
-    return places.filter((spot) => spot.category_id === category)
-  }, [category, places])
+  // ---------- MERGE ----------
+  const mergedSpots = useMemo(() => {
+    const all = [
+      ...places.map(p => ({ ...p, type: "place" })),
+      ...businesses.map(b => ({ ...b, type: "business" }))
+    ]
 
+    if (!category) return all
+    return all.filter(item => item.category_id === category)
+  }, [category, places, businesses])
+
+  // ---------- SORT ----------
   const sortedSpots = useMemo(() => {
-    const spots = [...filteredSpots]
+    const spots = [...mergedSpots]
 
     switch (sortOption) {
       case "alphabetical-asc":
@@ -62,11 +76,11 @@ export default function PlacesPage() {
       default:
         return spots
     }
-  }, [filteredSpots, sortOption])
+  }, [mergedSpots, sortOption])
 
   const getTitle = () => {
     if (!category) return "Descubrí Tafí Viejo"
-    const cat = categories.find((c) => c.id === category)
+    const cat = categories.find(c => c.id === category)
     return cat?.name || category
   }
 
@@ -75,13 +89,15 @@ export default function PlacesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
+
+      {/* NAV */}
       <nav className="flex items-center p-4 border-b border-border relative">
         <Link to="/">
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground cursor-pointer">
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
+
         <div className="absolute left-1/2 transform -translate-x-1/2 text-primary">
           <span className="text-2xl font-bold text-blue-950">
             Camin<span className="text-blue-400">AR</span>
@@ -89,7 +105,7 @@ export default function PlacesPage() {
         </div>
       </nav>
 
-      {/* Header */}
+      {/* HEADER */}
       <header className="text-center py-12 px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
           {getTitle()}
@@ -111,12 +127,12 @@ export default function PlacesPage() {
         </div>
       </header>
 
-      {/* Cards */}
+      {/* GRID */}
       <main className="container mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {sortedSpots.map((spot) => (
             <TouristCard
-              key={spot.id}
+              key={`${spot.type}-${spot.id}`}
               id={spot.id}
               name={spot.name}
               description={spot.description}
@@ -188,5 +204,3 @@ export default function PlacesPage() {
     </div>
   )
 }
-
-      

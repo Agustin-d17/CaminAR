@@ -6,12 +6,6 @@ import { Building2, Users, TrendingUp, MapPin } from "lucide-react"
 export default function AdminDashboard() {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const currentAdmin = localStorage.getItem("currentAdmin")
-    if (!currentAdmin) {
-      navigate("/admin/login")
-    }
-  }, [navigate])
 
   const stats = [
     {
