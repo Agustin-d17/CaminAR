@@ -6,7 +6,7 @@ import Places from "./pages/Places/Places"
 import PlacePage from "./pages/Place/PlacePage"
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 // Bussiness Auth
-// import BusinessRegister from "./pages/Business/Register/BusinessRegister"
+import BusinessRegister from "./pages/Business/Register/BusinessRegister"
 // import BusinessLogin from './pages/Business/Login/BusinessLogin'
 // Bussiness Dashboard
 // import DashboardLayout from './pages/Business/Dashboard/DashboardLayout'
@@ -32,6 +32,8 @@ import AdminCreateBusiness from './pages/Admin/Panel/Business/Create/AdminCreate
 import AdminEditBusiness from './pages/Admin/Panel/Business/Edit/AdminEditBusiness'
 import AdminViewBusiness from './pages/Admin/Panel/Business/View/AdminViewBusiness'
 import AdminSettings from './pages/Admin/Panel/Settings/AdminSettings'
+import RequireBusinessAuth from './Routes/business/RequireBusinessAuth'
+import { BusinessProvider } from './context/BusinessContext'
 function App() {
 
   return (
@@ -44,11 +46,11 @@ function App() {
           <Route path="/place/:id" element={<PlacePage />} />
           
           {/*Business Auth */}
-          {/* <Route path="/business/register" element={<BusinessRegister />} /> */}
+          <Route path="/business/register" element={<BusinessRegister />} />
    {/* <       Route path="/business/login" element={<BusinessLogin />}/> */}
           
           {/* Dashboard Business*/}
-          {/* <Route path="/business/dashboard/*" element={<DashboardLayout />}>
+          {/* <Route path="/business/dashboard/*" element={<RequireBusinessAuth><BusinessProvider><DashboardLayout /></BusinessProvider></RequireBusinessAuth>}>
             <Route index element={<DashboardRedirect />} />
             <Route path="profile" element={<DashboardProfile />} />
             <Route path="profile/edit" element={<EditProfile />} />
